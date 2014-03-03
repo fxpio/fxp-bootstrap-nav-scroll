@@ -1,0 +1,85 @@
+//
+// Navbar scroll
+// --------------------------------------------------
+
+.navbar-scrollable {
+    overflow: hidden;
+
+    .navbar-nav {
+        float: inherit;
+        white-space: nowrap;
+        display: inline-block;
+        margin: 0;
+
+        > li {
+            float: inherit;
+            display: inline-block;
+
+            > a {
+                padding-top: 16px;
+                padding-bottom: 16px;
+            }
+        }
+    }
+
+    &.navbar-scrollable-has-previous {
+        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+    }
+
+    &.navbar-scrollable-has-next {
+        .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+    }
+
+    &.navbar-scrollable-has-previous.navbar-scrollable-has-next {
+        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+    }
+}
+
+.dropdown-menu {
+    &.dropdown-navbar-scrollable {
+        display: block;
+        margin-top: -1px;
+    }
+}
+
+
+// Responsive
+// -------------------------
+
+@media (max-width: @screen-xs-max) {
+    .navbar.has-navbar-scrollable {
+        .navbar-header {
+            float: left;
+        }
+    }
+
+    .navbar-scrollable {
+        .navbar-nav {
+            .open .dropdown-menu {
+                position: absolute;
+                float: left;
+                width: auto;
+                margin-top: 2px;
+                background-color: @dropdown-bg;
+                border: 1px solid @dropdown-fallback-border; // IE8 fallback
+                border: 1px solid @dropdown-border;
+                .box-shadow(1px 3px 4px rgba(0, 0, 0, 0.18));
+            }
+
+            > li {
+                > a {
+                    padding-left: 8px;
+                    padding-right: 8px;
+                }
+            }
+        }
+    }
+
+    .dropdown-menu {
+        &.dropdown-navbar-scrollable {
+            left: 0 !important;
+            width: 100%;
+            min-width: inherit;
+        }
+    }
+}

@@ -55,17 +55,6 @@
 
     .navbar-scrollable {
         .navbar-nav {
-            .open .dropdown-menu {
-                position: absolute;
-                float: left;
-                width: auto;
-                margin-top: 2px;
-                background-color: @dropdown-bg;
-                border: 1px solid @dropdown-fallback-border; // IE8 fallback
-                border: 1px solid @dropdown-border;
-                .box-shadow(1px 3px 4px rgba(0, 0, 0, 0.18));
-            }
-
             > li {
                 > a {
                     padding-left: 8px;
@@ -80,6 +69,32 @@
             left: 0 !important;
             width: 100%;
             min-width: inherit;
+            border-left: none;
+            border-right: none;
+            max-height: 250px;
+            overflow-y: auto;
+
+            .dropdown {
+                > a:after {
+                    .rotate(90deg);
+                }
+
+                > .dropdown-menu {
+                    display: block;
+                    position: relative;
+                    width: 100%;
+                    border-left: none;
+                    border-right: none;
+                    border-bottom: none;
+                    .box-shadow(none);
+                }
+
+                &.open {
+                    > a:after {
+                        border-left-color: inherit;
+                    }
+                }
+            }
         }
     }
 }

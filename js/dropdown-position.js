@@ -62,8 +62,8 @@
      */
     function onShow (event) {
         var $menu = $.proxy(getMenu, this)();
-        var width = $menu.outerWidth();
-        var height = $menu.outerHeight();
+        var width = $menu.width();
+        var height = $menu.height();
         var left = $menu.offset()['left'];
         var top = $menu.offset()['top'];
         var endLeft = left + width;
@@ -71,6 +71,7 @@
         var maxLeft = $(window).width();
         var maxTop = $(window).height();
 
+        $menu.css('overflow', 'auto');
         $menu.css('max-width', maxLeft);
         $menu.css('max-height', maxTop);
 
@@ -102,6 +103,7 @@
         $menu.css('max-height', '');
         $menu.css('margin-left', '');
         $menu.css('margin-top', '');
+        $menu.css('overflow', '');
     }
 
     /**

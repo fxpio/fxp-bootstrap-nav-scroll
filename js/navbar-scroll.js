@@ -294,9 +294,13 @@
             $.proxy(onHideDropdown, this)(event);
         }
 
+        var ddId = 'dropdown-menu-original-' + this.guid;
+
         this.$dropdownToggle = $('> .dropdown-toggle', event.target);
         this.$dropdownMenu = $('> .dropdown-menu', event.target);
+        this.$dropdownMenu.attr('data-dropdown-restore-id', ddId);
         this.$dropdownRestoreMenu = $('<div class="dropdown-menu-restore-position"></div>');
+        this.$dropdownRestoreMenu.attr('data-dropdown-restore-for', ddId);
         this.$dropdownMenu.after(this.$dropdownRestoreMenu);
         this.$dropdownMenu.addClass('dropdown-navbar-scrollable');
         this.$dropdownMenu.css('left', Math.max(0, $(event.target).position()['left']));
@@ -319,6 +323,7 @@
         this.$dropdownRestoreMenu.after(this.$dropdownMenu);
         this.$dropdownRestoreMenu.remove();
         this.$dropdownMenu.removeClass('dropdown-navbar-scrollable');
+        this.$dropdownMenu.removeAttr('data-dropdown-restore-id');
         this.$dropdownMenu.css('left', '');
 
         delete this.$dropdownToggle;

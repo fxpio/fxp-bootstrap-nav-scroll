@@ -62,14 +62,15 @@
      */
     function onShow (event) {
         var $menu = $.proxy(getMenu, this)();
-        var width = $menu.width();
-        var height = $menu.height();
+        var parentOffset = $.proxy(getParentOffset, this)();
+        var width = $menu.outerWidth();
+        var height = $menu.outerHeight();
         var left = $menu.offset()['left'];
-        var top = $menu.offset()['top'];
+        var top = $menu.offset()['top'] - parentOffset['top'];
         var endLeft = left + width;
         var endTop = top + height;
         var maxLeft = $(window).width();
-        var maxTop = $(window).height();
+        var maxTop = $(window).height() - 50;
 
         $menu.css('overflow', 'auto');
         $menu.css('max-width', maxLeft);
@@ -137,6 +138,24 @@
         }
 
         return $menu;
+    }
+
+    /**
+     * Get parent offset of menu.
+     *
+     * @return Object (left and top properties)
+     *
+     * @private
+     */
+    function getParentOffset () {
+        var $menu = $.proxy(getMenu, this)();
+        var $parent = $menu.parent();
+
+        if ('WINDOW' == $parent.get(0) instanceof Window) {
+            return {'top': 0, 'left': 0};
+        }
+
+        return $parent.offset();
     }
 
 

@@ -23,15 +23,31 @@
     }
 
     &.navbar-scrollable-has-previous {
-        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 
     &.navbar-scrollable-has-next {
-        .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+        .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 
     &.navbar-scrollable-has-previous.navbar-scrollable-has-next {
-        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inner-shadow-color}");
+        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
+    }
+}
+
+.navbar-inverse {
+    .navbar-scrollable {
+        &.navbar-scrollable-has-previous {
+            .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
+        }
+
+        &.navbar-scrollable-has-next {
+            .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
+        }
+
+        &.navbar-scrollable-has-previous.navbar-scrollable-has-next {
+            .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
+        }
     }
 }
 

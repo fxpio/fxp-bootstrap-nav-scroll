@@ -63,18 +63,19 @@
     function onShow (event) {
         var $menu = $.proxy(getMenu, this)();
         var parentOffset = $.proxy(getParentOffset, this)();
-        var width = $menu.outerWidth();
-        var height = $menu.outerHeight();
         var left = $menu.offset()['left'];
         var top = $menu.offset()['top'] - parentOffset['top'];
-        var endLeft = left + width;
-        var endTop = top + height;
         var maxLeft = $(window).width();
         var maxTop = $(window).height() - 50;
 
         $menu.css('overflow', 'auto');
         $menu.css('max-width', maxLeft);
         $menu.css('max-height', maxTop);
+
+        var width = $menu.outerWidth();
+        var height = $menu.outerHeight();
+        var endLeft = left + width;
+        var endTop = top + height;
 
         if (left < 0) {
             $menu.css('margin-left', -left);

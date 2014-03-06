@@ -125,4 +125,19 @@ navbar-static-top {
             }
         }
     }
+
+    .hammer-scroll-content {
+        left: 0 !important;
+        width: 100%;
+        min-width: inherit;
+        border-left: none;
+        border-right: none;
+
+        .dropdown-menu {
+            &.dropdown-navbar-scrollable {
+                max-height: auto;
+                overflow-y: hidden;
+            }
+        }
+    }
 }

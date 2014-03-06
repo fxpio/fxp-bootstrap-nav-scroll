@@ -62,32 +62,55 @@
      */
     function onShow (event) {
         var $menu = $.proxy(getMenu, this)();
-        var parentOffset = $.proxy(getParentOffset, this)();
-        var left = $menu.offset()['left'];
-        var top = $menu.offset()['top'] - parentOffset['top'];
+            $menu.hammerScroll({useScroll: true, scrollbar: true});
+        var $wrapper = $menu.parent();
+
+        $wrapper.css('position', 'absolute');
+        $wrapper.css('top', '100%');
+        $wrapper.css('left', $menu.css('left'));
+        $wrapper.css('z-index', '1');
+        $wrapper.css('border', $menu.css('border'));
+        $wrapper.css('-webkit-box-shadow', $menu.css('-webkit-box-shadow'));
+        $wrapper.css('box-shadow', $menu.css('box-shadow'));
+        $menu.css('position', 'initial');
+        $menu.css('top', '0');
+        $menu.css('left', 'inherit');
+        $menu.css('right', 'initial');
+        $menu.css('margin-top', '0');
+        $menu.css('padding-top', '0');
+        $menu.css('border', 'none');
+        $menu.css('-webkit-box-shadow', 'initial');
+        $menu.css('box-shadow', 'initial');
+        $wrapper.css('overflow', 'hidden');
+
+        var parentOffset = $.proxy(getParentOffset, this)($wrapper);
+        var left = $wrapper.offset()['left'];
+        var top = $wrapper.offset()['top'] - parentOffset['top'];
         var maxLeft = $(window).width();
         var maxTop = $(window).height() - 50;
 
-        $menu.css('overflow', 'auto');
-        $menu.css('max-width', maxLeft);
+        $wrapper.css('max-width', maxLeft);
+        $wrapper.css('max-height', maxTop);
         $menu.css('max-height', maxTop);
 
-        var width = $menu.outerWidth();
-        var height = $menu.outerHeight();
+        var width = $wrapper.outerWidth();
+        var height = $wrapper.outerHeight();
         var endLeft = left + width;
         var endTop = top + height;
 
         if (left < 0) {
-            $menu.css('margin-left', -left);
+            $wrapper.css('margin-left', -left);
         } else if (endLeft > maxLeft) {
-            $menu.css('margin-left', -(endLeft - maxLeft));
+            $wrapper.css('margin-left', -(endLeft - maxLeft));
         }
 
         if (top < 0) {
-            $menu.css('margin-top', -top);
+            $wrapper.css('margin-top', -top);
         } else if (endTop > maxTop) {
-            $menu.css('margin-top', -(endTop - maxTop));
+            $wrapper.css('margin-top', -(endTop - maxTop));
         }
+
+        $menu.hammerScroll('resizeScrollbar');
     }
 
     /**
@@ -100,11 +123,20 @@
      */
     function onHide (event) {
         var $menu = $.proxy(getMenu, this)();
+        var $wrapper = $menu.parent();
 
+        $menu.hammerScroll('destroy');
+        $menu.css('position', '');
+        $menu.css('top', '');
+        $menu.css('left', '');
+        $menu.css('right', '');
+        $menu.css('margin-top', '');
+        $menu.css('padding-top', '');
+        $menu.css('border', '');
+        $menu.css('-webkit-box-shadow', '');
+        $menu.css('box-shadow', '');
         $menu.css('max-width', '');
         $menu.css('max-height', '');
-        $menu.css('margin-left', '');
-        $menu.css('margin-top', '');
         $menu.css('overflow', '');
     }
 
@@ -144,13 +176,14 @@
     /**
      * Get parent offset of menu.
      *
+     * @param jQuery $target
+     *
      * @return Object (left and top properties)
      *
      * @private
      */
-    function getParentOffset () {
-        var $menu = $.proxy(getMenu, this)();
-        var $parent = $menu.parent();
+    function getParentOffset ($target) {
+        var $parent = $target.parent();
 
         if ('WINDOW' == $parent.get(0) instanceof Window) {
             return {'top': 0, 'left': 0};

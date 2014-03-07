@@ -187,7 +187,7 @@
     function getParentOffset ($target) {
         var $parent = $target.parent();
 
-        if ('WINDOW' == $parent.get(0) instanceof Window) {
+        if ($parent.get(0) instanceof Window) {
             return {'top': 0, 'left': 0};
         }
 

@@ -66,7 +66,7 @@
         var $wrapper = $menu.parent();
 
         $wrapper.css('position', 'absolute');
-        $wrapper.css('top', '100%');
+        $wrapper.css('top', $menu.css('top'));
         $wrapper.css('left', $menu.css('left'));
         $wrapper.css('z-index', $menu.css('z-index'));
         $wrapper.css('border', $menu.css('border'));

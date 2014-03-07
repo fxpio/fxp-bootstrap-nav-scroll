@@ -304,6 +304,11 @@
         this.$dropdownMenu.after(this.$dropdownRestoreMenu);
         this.$dropdownMenu.addClass('dropdown-nav-scrollable');
         this.$dropdownMenu.css('left', Math.max(0, $(event.target).position()['left']));
+
+        if (!this.$dropdownMenu.parent().hasClass('navbar')) {
+            this.$dropdownMenu.css('top', $(event.target).position()['top'] + $(event.target).outerHeight());
+        }
+
         this.$element.before(this.$dropdownMenu);
     }
 
@@ -325,6 +330,7 @@
         this.$dropdownMenu.removeClass('dropdown-nav-scrollable');
         this.$dropdownMenu.removeAttr('data-dropdown-restore-id');
         this.$dropdownMenu.css('left', '');
+        this.$dropdownMenu.css('top', '');
 
         delete this.$dropdownToggle;
         delete this.$dropdownMenu;

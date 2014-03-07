@@ -10,8 +10,8 @@
 +function ($) {
     'use strict';
 
-    // NAVBAR SCROLL CLASS DEFINITION
-    // ==============================
+    // NAV SCROLL CLASS DEFINITION
+    // ===========================
 
     /**
      * @constructor
@@ -21,17 +21,17 @@
      *
      * @this
      */
-    var NavbarScroll = function (element, options) {
+    var NavScroll = function (element, options) {
         this.guid       = jQuery.guid;
-        this.options    = $.extend({}, NavbarScroll.DEFAULTS, options);
+        this.options    = $.extend({}, NavScroll.DEFAULTS, options);
         this.$element   = $(element);
         this.$content   = $('.' + this.options.classNav, this.$element);
 
         this.$element.on('DOMMouseScroll mousewheel', $.proxy(onMouseScroll, this));
-        this.$element.on('show.bs.dropdown.st.navbar-scroll', $.proxy(onShowDropdown, this));
-        this.$element.on('hide.bs.dropdown.st.navbar-scroll', $.proxy(onHideDropdown, this));
-        this.$element.on('scroll.st.navbar-scroll', $.proxy(preventScroll, this));
-        $(window).on('resize.st.navbarscroll' + this.guid, $.proxy(this.resizeScroll, this));
+        this.$element.on('show.bs.dropdown.st.nav-scroll', $.proxy(onShowDropdown, this));
+        this.$element.on('hide.bs.dropdown.st.nav-scroll', $.proxy(onHideDropdown, this));
+        this.$element.on('scroll.st.nav-scroll', $.proxy(preventScroll, this));
+        $(window).on('resize.st.navscroll' + this.guid, $.proxy(this.resizeScroll, this));
 
         $.proxy(refreshIndicator, this)();
 
@@ -55,8 +55,8 @@
      *
      * @type Array
      */
-    NavbarScroll.DEFAULTS = {
-        classNav:        'navbar-nav',
+    NavScroll.DEFAULTS = {
+        classNav:        'nav',
         maxBounce:       100,
         inertiaVelocity: 0.7,
         inertiaDuration: 0.2,
@@ -68,7 +68,7 @@
      * 
      * @param Event event The hammer event
      */
-    NavbarScroll.prototype.onDrag = function (event) {
+    NavScroll.prototype.onDrag = function (event) {
         if ('left' == event.gesture.direction || 'right' == event.gesture.direction) {
             var horizontal = $.proxy(limitHorizontalValue, this)(event, this.options.maxBounce);
 
@@ -83,7 +83,7 @@
      * 
      * @param Event event The hammer event
      */
-    NavbarScroll.prototype.onDragEnd = function (event) {
+    NavScroll.prototype.onDragEnd = function (event) {
         $.proxy(changeTransition, this)(this.$content);
 
         if ('left' == event.gesture.direction || 'right' == event.gesture.direction) {
@@ -104,7 +104,7 @@
      *
      * @this
      */
-    NavbarScroll.prototype.resizeScroll = function () {
+    NavScroll.prototype.resizeScroll = function () {
         var position = this.$content.position()['left'];
 
         if (position >= 0) {
@@ -132,14 +132,14 @@
      *
      * @this
      */
-    NavbarScroll.prototype.destroy = function () {
+    NavScroll.prototype.destroy = function () {
         $.proxy(onHideDropdown, this)();
         this.$element.off('DOMMouseScroll mousewheel', $.proxy(onMouseScroll, this));
-        this.$element.off('show.bs.dropdown.st.navbar-scroll', $.proxy(onShowDropdown, this));
-        this.$element.off('hide.bs.dropdown.st.navbar-scroll', $.proxy(onHideDropdown, this));
-        this.$element.off('scroll.st.navbar-scroll', $.proxy(preventScroll, this));
-        this.$element.removeData('st.navbarscroll');
-        $(window).off('resize.st.navbarscroll' + this.guid, $.proxy(this.resizeScroll, this));
+        this.$element.off('show.bs.dropdown.st.nav-scroll', $.proxy(onShowDropdown, this));
+        this.$element.off('hide.bs.dropdown.st.nav-scroll', $.proxy(onHideDropdown, this));
+        this.$element.off('scroll.st.nav-scroll', $.proxy(preventScroll, this));
+        this.$element.removeData('st.navscroll');
+        $(window).off('resize.st.navscroll' + this.guid, $.proxy(this.resizeScroll, this));
     };
 
     /**
@@ -302,7 +302,7 @@
         this.$dropdownRestoreMenu = $('<div class="dropdown-menu-restore-position"></div>');
         this.$dropdownRestoreMenu.attr('data-dropdown-restore-for', ddId);
         this.$dropdownMenu.after(this.$dropdownRestoreMenu);
-        this.$dropdownMenu.addClass('dropdown-navbar-scrollable');
+        this.$dropdownMenu.addClass('dropdown-nav-scrollable');
         this.$dropdownMenu.css('left', Math.max(0, $(event.target).position()['left']));
         this.$element.before(this.$dropdownMenu);
     }
@@ -322,7 +322,7 @@
 
         this.$dropdownRestoreMenu.after(this.$dropdownMenu);
         this.$dropdownRestoreMenu.remove();
-        this.$dropdownMenu.removeClass('dropdown-navbar-scrollable');
+        this.$dropdownMenu.removeClass('dropdown-nav-scrollable');
         this.$dropdownMenu.removeAttr('data-dropdown-restore-id');
         this.$dropdownMenu.css('left', '');
 
@@ -397,17 +397,17 @@
         var maxRight = this.$element.innerWidth();
 
         if (position < 0) {
-            this.$element.addClass('navbar-scrollable-has-previous');
+            this.$element.addClass('nav-scrollable-has-previous');
 
         } else {
-            this.$element.removeClass('navbar-scrollable-has-previous');
+            this.$element.removeClass('nav-scrollable-has-previous');
         }
 
         if (rightPosition > maxRight) {
-            this.$element.addClass('navbar-scrollable-has-next');
+            this.$element.addClass('nav-scrollable-has-next');
 
         } else {
-            this.$element.removeClass('navbar-scrollable-has-next');
+            this.$element.removeClass('nav-scrollable-has-next');
         }
 
         if (undefined != this.$dropdownToggle) {
@@ -416,15 +416,15 @@
     }
 
 
-    // NAVBAR SCROLL PLUGIN DEFINITION
-    // ===============================
+    // NAV SCROLL PLUGIN DEFINITION
+    // ============================
 
-    var old = $.fn.navbarScroll;
+    var old = $.fn.navScroll;
 
-    $.fn.navbarScroll = function (option, _relatedTarget) {
+    $.fn.navScroll = function (option, _relatedTarget) {
         return this.each(function () {
             var $this   = $(this);
-            var data    = $this.data('st.navbarscroll');
+            var data    = $this.data('st.navscroll');
             var options = typeof option == 'object' && option;
 
             if (!data && option == 'destroy') {
@@ -432,7 +432,7 @@
             }
 
             if (!data) {
-                $this.data('st.navbarscroll', (data = new NavbarScroll(this, options)));
+                $this.data('st.navscroll', (data = new NavScroll(this, options)));
             }
 
             if (typeof option == 'string') {
@@ -441,26 +441,26 @@
         });
     };
 
-    $.fn.navbarScroll.Constructor = NavbarScroll;
+    $.fn.navScroll.Constructor = NavScroll;
 
 
-    // NAVBAR SCROLL NO CONFLICT
-    // =========================
+    // NAV SCROLL NO CONFLICT
+    // ======================
 
-    $.fn.navbarScroll.noConflict = function () {
-        $.fn.navbarScroll = old;
+    $.fn.navScroll.noConflict = function () {
+        $.fn.navScroll = old;
 
         return this;
     };
 
 
-    // NAVBAR SCROLL DATA-API
-    // ======================
+    // NAV SCROLL DATA-API
+    // ===================
 
     $(window).on('load', function () {
-        $('[data-navbar-scroll="true"]').each(function () {
+        $('[data-nav-scroll="true"]').each(function () {
             var $this = $(this);
-            $this.navbarScroll($this.data());
+            $this.navScroll($this.data());
         });
     });
 

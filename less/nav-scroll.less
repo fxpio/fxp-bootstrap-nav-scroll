@@ -1,11 +1,11 @@
 //
-// Navbar scroll
+// Nav scrollable
 // --------------------------------------------------
 
-.navbar-scrollable {
+.nav-scrollable {
     overflow: hidden;
 
-    .navbar-nav {
+    .nav {
         float: inherit;
         white-space: nowrap;
         display: inline-block;
@@ -14,38 +14,56 @@
         > li {
             float: inherit;
             display: inline-block;
+        }
 
-            > a {
+        &.navbar-nav {
+            > li > a {
                 padding-top: 16px;
                 padding-bottom: 16px;
             }
         }
     }
 
-    &.navbar-scrollable-has-previous {
+    &.is-nav-tabs {
+        & + .panel,
+        & + .tab-content > .tab-pane > .panel {
+            &,
+            > .panel-heading,
+            > .panel-body,
+            > .panel-footer {
+                .border-top-radius(0);
+            }
+        }
+    }
+
+    &.is-nav-pills {
+        margin-bottom: 10px;
+    }
+
+    &.nav-scrollable-has-previous {
         .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 
-    &.navbar-scrollable-has-next {
+    &.nav-scrollable-has-next {
         .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 
-    &.navbar-scrollable-has-previous.navbar-scrollable-has-next {
+    &.nav-scrollable-has-previous.nav-scrollable-has-next {
         .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 }
 
 .navbar-inverse {
-    .navbar-scrollable {
-        &.navbar-scrollable-has-previous {
+    .nav-scrollable {
+        &.nav-scrollable-has-previous {
             .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
         }
 
-        &.navbar-scrollable-has-next {
+        &.nav-scrollable-has-next {
             .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
         }
 
-        &.navbar-scrollable-has-previous.navbar-scrollable-has-next {
+        &.nav-scrollable-has-previous.nav-scrollable-has-next {
             .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
         }
     }
@@ -53,7 +71,7 @@
 
 .navbar-fixed-top,
 navbar-static-top {
-    .navbar-scrollable {
+    .nav-scrollable {
         &:last-child {
             margin-right: 25px;
         }
@@ -61,7 +79,7 @@ navbar-static-top {
 }
 
 .dropdown-menu {
-    &.dropdown-navbar-scrollable {
+    &.dropdown-nav-scrollable {
         display: block;
         margin-top: -1px;
         .border-top-radius(0);
@@ -73,13 +91,13 @@ navbar-static-top {
 // -------------------------
 
 @media (max-width: @screen-xs-max) {
-    .navbar.has-navbar-scrollable {
+    .navbar.has-nav-scrollable {
         .navbar-header {
             float: left;
         }
     }
 
-    .navbar-scrollable {
+    .nav-scrollable {
         .navbar-nav {
             > li {
                 > a {
@@ -91,7 +109,7 @@ navbar-static-top {
     }
 
     .dropdown-menu {
-        &.dropdown-navbar-scrollable {
+        &.dropdown-nav-scrollable {
             left: 0 !important;
             width: 100%;
             min-width: inherit;
@@ -134,7 +152,7 @@ navbar-static-top {
         border-right: none;
 
         .dropdown-menu {
-            &.dropdown-navbar-scrollable {
+            &.dropdown-nav-scrollable {
                 max-height: auto;
                 overflow-y: hidden;
             }

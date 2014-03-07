@@ -68,10 +68,12 @@
         $wrapper.css('position', 'absolute');
         $wrapper.css('top', '100%');
         $wrapper.css('left', $menu.css('left'));
-        $wrapper.css('z-index', '1');
+        $wrapper.css('z-index', $menu.css('z-index'));
         $wrapper.css('border', $menu.css('border'));
         $wrapper.css('-webkit-box-shadow', $menu.css('-webkit-box-shadow'));
         $wrapper.css('box-shadow', $menu.css('box-shadow'));
+        $wrapper.css('overflow', 'hidden');
+        $wrapper.css('margin-top', '-1px');
         $menu.css('position', 'initial');
         $menu.css('top', '0');
         $menu.css('left', 'inherit');
@@ -81,7 +83,7 @@
         $menu.css('border', 'none');
         $menu.css('-webkit-box-shadow', 'initial');
         $menu.css('box-shadow', 'initial');
-        $wrapper.css('overflow', 'hidden');
+        $menu.css('display', 'block');
 
         var parentOffset = $.proxy(getParentOffset, this)($wrapper);
         var left = $wrapper.offset()['left'];
@@ -123,7 +125,6 @@
      */
     function onHide (event) {
         var $menu = $.proxy(getMenu, this)();
-        var $wrapper = $menu.parent();
 
         $menu.hammerScroll('destroy');
         $menu.css('position', '');
@@ -138,6 +139,7 @@
         $menu.css('max-width', '');
         $menu.css('max-height', '');
         $menu.css('overflow', '');
+        $menu.css('display', '');
     }
 
     /**

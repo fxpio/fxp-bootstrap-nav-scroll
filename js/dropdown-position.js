@@ -89,7 +89,7 @@
         var left = $wrapper.offset()['left'];
         var top = $wrapper.offset()['top'] - parentOffset['top'];
         var maxLeft = $(window).width();
-        var maxTop = $(window).height() - 50;
+        var maxTop = $(window).height() + $(window).scrollTop() - 50;
 
         $wrapper.css('max-width', maxLeft);
         $wrapper.css('max-height', maxTop);

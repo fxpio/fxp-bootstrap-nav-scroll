@@ -243,15 +243,17 @@
      * @private
      */
     function onMouseScroll (event) {
-        var position = -this.$content.position()['left'];
+        var position = -getPosition(this.$content);
         var wrapperWidth = this.$element.innerWidth();
         var contentWidth = this.$content.outerWidth();
         var delta = (event.originalEvent.type == 'DOMMouseScroll' ?
                 event.originalEvent.detail * -40 :
                 event.originalEvent.wheelDelta);
 
-        event.stopPropagation();
-        event.preventDefault();
+        if (!(delta > 0 && position <= 0) && !(delta <= 0 && (contentWidth - position) <= wrapperWidth)) {
+            event.stopPropagation();
+            event.preventDefault();
+        }
 
         position -= delta;
         position = Math.max(position, 0);

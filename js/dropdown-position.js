@@ -74,15 +74,15 @@
         $wrapper.css('box-shadow', $menu.css('box-shadow'));
         $wrapper.css('overflow', 'hidden');
         $wrapper.css('margin-top', '-1px');
-        $menu.css('position', 'initial');
+        $menu.css('position', 'static');
         $menu.css('top', '0');
         $menu.css('left', 'inherit');
-        $menu.css('right', 'initial');
+        $menu.css('right', 'auto');
         $menu.css('margin-top', '0');
         $menu.css('padding-top', '0');
         $menu.css('border', 'none');
-        $menu.css('-webkit-box-shadow', 'initial');
-        $menu.css('box-shadow', 'initial');
+        $menu.css('-webkit-box-shadow', 'none');
+        $menu.css('box-shadow', 'none');
         $menu.css('display', 'block');
 
         var parentOffset = $.proxy(getParentOffset, this)($wrapper);

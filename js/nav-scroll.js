@@ -43,7 +43,8 @@
             swipe: false,
             drag_block_horizontal: true,
             drag_lock_to_axis: true,
-            drag_min_distance: 3
+            drag_min_distance: 3,
+            prevent_mouseevents: true
         })
 
         .on('drag', $.proxy(this.onDrag, this))

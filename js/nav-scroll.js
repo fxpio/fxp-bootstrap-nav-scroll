@@ -43,8 +43,7 @@
             swipe: false,
             drag_block_horizontal: true,
             drag_lock_to_axis: true,
-            drag_min_distance: 3,
-            prevent_mouseevents: true
+            drag_min_distance: 3
         })
 
         .on('drag', $.proxy(this.onDrag, this))
@@ -94,6 +93,7 @@
             $.proxy(changeTransform, this)(this.$content, 'translate3d(' + -horizontal + 'px, 0px, 0px)');
         }
 
+        $(event.target).on('click.st.navscroll', $.proxy(onDragEndClick, this));
         $.proxy(refreshIndicator, this)();
 
         delete this.dragStartPosition;
@@ -233,6 +233,20 @@
         }
 
         return transform.e;
+    }
+
+    /**
+     * Action on mouse drag end for block click action.
+     *
+     * @param jQuery.Event event
+     *
+     * @this
+     * @private
+     */
+    function onDragEndClick (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        $(event.target).off('click.st.navscroll', $.proxy(onDragEndClick, this));
     }
 
     /**

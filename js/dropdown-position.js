@@ -61,7 +61,7 @@
      * @private
      */
     function onShow (event) {
-        var $menu = $.proxy(getMenu, this)();
+        var $menu = $.proxy(getMenu, event.target)();
             $menu.hammerScroll({useScroll: true, scrollbar: true});
         var $wrapper = $menu.parent();
 
@@ -124,7 +124,7 @@
      * @private
      */
     function onHide (event) {
-        var $menu = $.proxy(getMenu, this)();
+        var $menu = $.proxy(getMenu, event.target)();
 
         $menu.hammerScroll('destroy');
         $menu.css('position', '');
@@ -151,10 +151,10 @@
      * @private
      */
     function onResize (event) {
-        var $menu = $.proxy(getMenu, this)();
+        var $menu = $.proxy(getMenu, event.target)();
         $menu.removeClass('open');
 
-        $menu.trigger('shown.bs.dropdown', { relatedTarget: this });
+        $menu.trigger('shown.bs.dropdown', { relatedTarget: event.target });
     }
 
     /**
@@ -237,10 +237,10 @@
     // ==========================
 
     $(document)
-        .on('shown.bs.dropdown.st.dropdownposition', '.dropdown', $.proxy(onShow, this))
-        .on('hide.bs.dropdown.st.dropdownposition', '.dropdown', $.proxy(onHide, this))
+        .on('shown.bs.dropdown.st.dropdownposition', '.dropdown', onShow)
+        .on('hide.bs.dropdown.st.dropdownposition', '.dropdown', onHide)
     ;
 
-    $(window).on('shown.bs.dropdown.st.dropdownposition', '.dropdown.open', $.proxy(onResize, this));
+    $(window).on('shown.bs.dropdown.st.dropdownposition', '.dropdown.open', onResize);
 
 }(jQuery);

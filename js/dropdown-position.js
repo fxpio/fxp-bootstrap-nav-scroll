@@ -7,64 +7,84 @@
  * file that was distributed with this source code.
  */
 
-+function ($) {
+/*global jQuery*/
+/*global window*/
+/*global document*/
+/*global CustomEvent*/
+/*global DropdownPosition*/
+
+/**
+ * @param {jQuery} $
+ *
+ * @typedef {DropdownPosition} DropdownPosition
+ */
+(function ($) {
     'use strict';
 
-    // DROPDOWN POSITION CLASS DEFINITION
-    // ==================================
+    /**
+     * Get dropdown menu.
+     *
+     * @param {EventTarget} target The DOM element
+     *
+     * @return {jQuery}
+     *
+     * @private
+     */
+    function getMenu(target) {
+        var $menu = $('.dropdown-menu', target),
+            menuId;
+
+        if (0 === $menu.size()) {
+            menuId = $('.dropdown-menu-restore-position', target).attr('data-dropdown-restore-for');
+            $menu = $('[data-dropdown-restore-id=' + menuId + ']');
+        }
+
+        return $menu;
+    }
 
     /**
-     * @constructor
+     * Get parent offset of menu.
      *
-     * @param htmlString|Element|Array|jQuery element
-     * @param Array                           options
+     * @param {jQuery} $target
      *
-     * @this
+     * @return Object (left and top properties)
+     *
+     * @private
      */
-    var DropdownPosition = function (element, options) {
-        this.guid     = jQuery.guid;
-        this.options  = $.extend({}, options);
-        this.$element = $(element);
+    function getParentOffset($target) {
+        var $parent = $target.parent();
 
-        $(document)
-            .on('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', $.proxy(onShow, this))
-            .on('hide.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', $.proxy(onHide, this))
-        ;
+        if ($parent.get(0) instanceof window) {
+            return {'top': 0, 'left': 0};
+        }
 
-        $(window).on('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown.open', $.proxy(onResize, this));
-    };
-
-    /**
-     * Destroy instance.
-     *
-     * @this
-     */
-    DropdownPosition.prototype.destroy = function () {
-        $.proxy(onHide, this.$element.get(0))();
-
-        $(document)
-            .off('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', $.proxy(onShow, this))
-            .off('hide.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', $.proxy(onHide, this))
-        ;
-
-        $(window).off('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown.open', $.proxy(onResize, this));
-
-        this.$element.removeData('st.dropdownposition');
-    };
+        return $parent.offset();
+    }
 
     /**
      * Action on show dropdown event.
      *
-     * @param jQuery.Event event
+     * @param {jQuery.Event|Event} event
      *
-     * @this
      * @private
      */
-    function onShow (event) {
-        var $menu = $.proxy(getMenu, event.target)();
-            $menu.hammerScroll({useScroll: true, scrollbar: true});
-        var $wrapper = $menu.parent();
+    function onShow(event) {
+        var $menu,
+            $wrapper,
+            parentOffset,
+            left,
+            top,
+            maxLeft,
+            maxTop,
+            width,
+            height,
+            endLeft,
+            endTop;
 
+        $menu = getMenu(event.target);
+        $menu.hammerScroll({useScroll: true, scrollbar: true});
+
+        $wrapper = $menu.parent().eq(0);
         $wrapper.css('position', 'absolute');
         $wrapper.css('top', $menu.css('top'));
         $wrapper.css('left', $menu.css('left'));
@@ -85,20 +105,20 @@
         $menu.css('box-shadow', 'none');
         $menu.css('display', 'block');
 
-        var parentOffset = $.proxy(getParentOffset, this)($wrapper);
-        var left = $wrapper.offset()['left'];
-        var top = $wrapper.offset()['top'] - parentOffset['top'];
-        var maxLeft = $(window).width();
-        var maxTop = $(window).height() + $(window).scrollTop() - 50;
+        parentOffset = getParentOffset($wrapper);
+        left = $wrapper.offset().left;
+        top = $wrapper.offset().top - parentOffset.top;
+        maxLeft = $(window).width();
+        maxTop = $(window).height() + $(window).eq(0).scrollTop() - 50;
 
         $wrapper.css('max-width', maxLeft);
         $wrapper.css('max-height', maxTop);
         $menu.css('max-height', maxTop);
 
-        var width = $wrapper.outerWidth();
-        var height = $wrapper.outerHeight();
-        var endLeft = left + width;
-        var endTop = top + height;
+        width = $wrapper.outerWidth();
+        height = $wrapper.outerHeight();
+        endLeft = left + width;
+        endTop = top + height;
 
         if (left < 0) {
             $wrapper.css('margin-left', -left);
@@ -118,13 +138,12 @@
     /**
      * Action on hide dropdown event.
      *
-     * @param jQuery.Event event
+     * @param {jQuery.Event|Event} event
      *
-     * @this
      * @private
      */
-    function onHide (event) {
-        var $menu = $.proxy(getMenu, event.target)();
+    function onHide(event) {
+        var $menu = getMenu(event.target);
 
         $menu.hammerScroll('destroy');
         $menu.css('position', '');
@@ -145,68 +164,73 @@
     /**
      * Action on window resize event.
      *
-     * @param jQuery.Event event
+     * @param {jQuery.Event|Event} event
      *
-     * @this
      * @private
      */
-    function onResize (event) {
-        var $menu = $.proxy(getMenu, event.target)();
-        $menu.removeClass('open');
+    function onResize(event) {
+        var $menu = getMenu(event.target);
 
+        $menu.removeClass('open');
         $menu.trigger('shown.bs.dropdown', { relatedTarget: event.target });
     }
 
-    /**
-     * Get dropdown menu.
-     *
-     * @return jQuery
-     *
-     * @private
-     */
-    function getMenu () {
-        var $menu = $('.dropdown-menu', this);
-
-        if (0 == $menu.size()) {
-            var menuId = $('.dropdown-menu-restore-position', this).attr('data-dropdown-restore-for');
-            $menu = $('[data-dropdown-restore-id=' + menuId + ']');
-        }
-
-        return $menu;
-    }
+    // DROPDOWN POSITION CLASS DEFINITION
+    // ==================================
 
     /**
-     * Get parent offset of menu.
+     * @constructor
      *
-     * @param jQuery $target
+     * @param {string|elements|object|jQuery} element
+     * @param {object}                        options
      *
-     * @return Object (left and top properties)
-     *
-     * @private
+     * @this DropdownPosition
      */
-    function getParentOffset ($target) {
-        var $parent = $target.parent();
+    var DropdownPosition = function (element, options) {
+        this.guid     = jQuery.guid;
+        this.options  = $.extend({}, options);
+        this.$element = $(element);
 
-        if ($parent.get(0) instanceof Window) {
-            return {'top': 0, 'left': 0};
-        }
+        $(document)
+            .on('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', onShow)
+            .on('hide.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', onHide);
 
-        return $parent.offset();
-    }
+        $(window).on('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown.open', onResize);
+    },
+        old;
+
+    /**
+     * Destroy instance.
+     *
+     * @this DropdownPosition
+     */
+    DropdownPosition.prototype.destroy = function () {
+        var event = new CustomEvent('destroy');
+        event.target = this.$element.get(0);
+        onHide(event);
+
+        $(document)
+            .off('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', onShow)
+            .off('hide.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown', onHide);
+
+        $(window).off('shown.bs.dropdown.st.dropdownposition' + this.guid, '.dropdown.open', onResize);
+
+        this.$element.removeData('st.dropdownposition');
+    };
 
 
     // DROPDOWN POSITION PLUGIN DEFINITION
     // ===================================
 
-    var old = $.fn.dropdownPosition;
+    old = $.fn.dropdownPosition;
 
-    $.fn.dropdownPosition = function (option, _relatedTarget) {
+    $.fn.dropdownPosition = function (option, value) {
         return this.each(function () {
-            var $this   = $(this);
-            var data    = $this.data('st.dropdownposition');
-            var options = typeof option == 'object' && option;
+            var $this   = $(this),
+                data    = $this.data('st.dropdownposition'),
+                options = typeof option === 'object' && option;
 
-            if (!data && option == 'destroy') {
+            if (!data && option === 'destroy') {
                 return;
             }
 
@@ -214,8 +238,8 @@
                 $this.data('st.dropdownposition', (data = new DropdownPosition(this, options)));
             }
 
-            if (typeof option == 'string') {
-                data[option]();
+            if (typeof option === 'string') {
+                data[option](value);
             }
         });
     };
@@ -238,9 +262,8 @@
 
     $(document)
         .on('shown.bs.dropdown.st.dropdownposition', '.dropdown', onShow)
-        .on('hide.bs.dropdown.st.dropdownposition', '.dropdown', onHide)
-    ;
+        .on('hide.bs.dropdown.st.dropdownposition', '.dropdown', onHide);
 
     $(window).on('shown.bs.dropdown.st.dropdownposition', '.dropdown.open', onResize);
 
-}(jQuery);
+}(jQuery));

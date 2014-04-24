@@ -9,6 +9,7 @@
 
 /*global jQuery*/
 /*global window*/
+/*global Window*/
 /*global document*/
 /*global CustomEvent*/
 /*global DropdownPosition*/
@@ -54,7 +55,7 @@
     function getParentOffset($target) {
         var $parent = $target.parent();
 
-        if ($parent.get(0) instanceof window) {
+        if ($parent.get(0) instanceof Window) {
             return {'top': 0, 'left': 0};
         }
 

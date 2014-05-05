@@ -223,9 +223,7 @@
     // DROPDOWN POSITION PLUGIN DEFINITION
     // ===================================
 
-    old = $.fn.dropdownPosition;
-
-    $.fn.dropdownPosition = function (option, value) {
+    function Plugin(option, value) {
         return this.each(function () {
             var $this   = $(this),
                 data    = $this.data('st.dropdownposition'),
@@ -243,8 +241,11 @@
                 data[option](value);
             }
         });
-    };
+    }
 
+    old = $.fn.dropdownPosition;
+
+    $.fn.dropdownPosition             = Plugin;
     $.fn.dropdownPosition.Constructor = DropdownPosition;
 
 

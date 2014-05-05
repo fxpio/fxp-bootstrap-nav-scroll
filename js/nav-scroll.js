@@ -499,9 +499,7 @@
     // NAV SCROLL PLUGIN DEFINITION
     // ============================
 
-    old = $.fn.navScroll;
-
-    $.fn.navScroll = function (option, value) {
+    function Plugin(option, value) {
         return this.each(function () {
             var $this   = $(this),
                 data    = $this.data('st.navscroll'),
@@ -519,8 +517,11 @@
                 data[option](value);
             }
         });
-    };
+    }
 
+    old = $.fn.navScroll;
+
+    $.fn.navScroll             = Plugin;
     $.fn.navScroll.Constructor = NavScroll;
 
 
@@ -540,7 +541,7 @@
     $(window).on('load', function () {
         $('[data-nav-scroll="true"]').each(function () {
             var $this = $(this);
-            $this.navScroll($this.data());
+            Plugin.call($this, $this.data());
         });
     });
 

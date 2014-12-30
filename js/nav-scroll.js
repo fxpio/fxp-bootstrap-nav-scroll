@@ -510,7 +510,8 @@
             }
 
             if (!data) {
-                $this.data('st.navscroll', (data = new NavScroll(this, options)));
+                data = new NavScroll(this, options);
+                $this.data('st.navscroll', data);
             }
 
             if (typeof option === 'string') {

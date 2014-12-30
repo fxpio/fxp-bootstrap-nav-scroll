@@ -234,7 +234,8 @@
             }
 
             if (!data) {
-                $this.data('st.dropdownposition', (data = new DropdownPosition(this, options)));
+                data = new DropdownPosition(this, options);
+                $this.data('st.dropdownposition', data);
             }
 
             if (typeof option === 'string') {

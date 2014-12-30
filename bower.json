@@ -1,0 +1,31 @@
+{
+  "name": "sonatra-bootstrap-nav-scroll",
+  "version": "1.0.0",
+  "authors": [
+    "François Pluchino <francois.pluchino@sonatra.com>"
+  ],
+  "description": "A simplistic javascript scroller with Hammerjs for Bootstrap Nav",
+  "main": "js/nav-scroll.js",
+  "keywords": [
+    "bootstrap",
+    "scroller",
+    "hammerjs",
+    "nav",
+    "jquery"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll",
+  "dependencies": {
+    "bootstrap": ">=3.0",
+    "jquery": ">=1.11.0",
+    "hammerjs": "1.0.*"
+  },
+  "dependencies": {
+    "sonatra-hammer-scroll": "latest"
+  },
+  "ignore": [
+    "examples",
+    "doc",
+    "README.md"
+  ]
+}

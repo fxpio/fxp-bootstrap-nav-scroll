@@ -19,7 +19,10 @@
 /**
  * @param {jQuery} $
  *
- * @typedef {NavScroll} NavScroll
+ * @typedef {NavScroll}        NavScroll
+ * @typedef {Number|undefined} NavScroll.$dropdownToggle
+ * @typedef {Number|undefined} NavScroll.$dropdownMenu
+ * @typedef {Number|undefined} NavScroll.dragStartPosition
  */
 (function ($) {
     'use strict';
@@ -72,6 +75,9 @@
      * @param {number}    maxBounce
      * @param {boolean}   [inertia]
      *
+     * @typedef {Number} Event.deltaX    The delta X
+     * @typedef {Number} Event.velocityX The velocity X
+     *
      * @returns {number} The limited horizontal value
      *
      * @private
@@ -81,21 +87,20 @@
             height,
             maxScroll,
             horizontal,
-            inertiaVal,
-            dragStartPosition = 'dragStartPosition';
+            inertiaVal;
 
         if (undefined === self.dragStartPosition) {
-            self[dragStartPosition] = getPosition(self.$content);
+            self.dragStartPosition = getPosition(self.$content);
         }
 
         wrapperWidth = self.$element.innerWidth();
         height = self.$content.outerWidth();
         maxScroll = height - wrapperWidth + maxBounce;
-        horizontal = -Math.round(event.gesture.deltaX + self.dragStartPosition);
+        horizontal = -Math.round(event.deltaX + self.dragStartPosition);
 
         // inertia
         if (inertia) {
-            inertiaVal = -event.gesture.deltaX * event.gesture.velocityX * (1 + self.options.inertiaVelocity);
+            inertiaVal = -event.deltaX * Math.abs(event.velocityX) * (1 + self.options.inertiaVelocity);
             horizontal = Math.round(horizontal + inertiaVal);
         }
 
@@ -344,6 +349,8 @@
      * @param {string|elements|object|jQuery} element
      * @param {object}                        options
      *
+     * @typedef {Manager} NavScroll.hammer The hammer manager
+     *
      * @this NavScroll
      */
     var NavScroll = function (element, options) {
@@ -369,10 +376,12 @@
             drag_block_horizontal: true,
             drag_lock_to_axis: true,
             drag_min_distance: 3
-        })
+        });
 
-            .on('drag', this.onDrag)
-            .on('dragend', this.onDragEnd);
+        this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+        this.hammer.get('swipe').set({ enable: false });
+        this.hammer.on('pan', $.proxy(this.onDrag, this.$element.get(0)));
+        this.hammer.on('panend', $.proxy(this.onDragEnd, this.$element.get(0)));
     },
         old;
 
@@ -394,7 +403,7 @@
      *
      * @param {Event} event The hammer event
      *
-     * @typedef {object} Event.gesture The hammer object event
+     * @typedef {object} Event.direction The hammer direction
      *
      * @this Element
      */
@@ -403,7 +412,7 @@
         var self = $(this).data('st.navscroll'),
             horizontal;
 
-        if (Hammer.DIRECTION_LEFT === event.gesture.direction || Hammer.DIRECTION_RIGHT === event.gesture.direction) {
+        if (Hammer.DIRECTION_LEFT === event.direction || Hammer.DIRECTION_RIGHT === event.direction) {
             horizontal = limitHorizontalValue(self, event, self.options.maxBounce);
 
             changeTransition(self, self.$content, 'none');
@@ -417,29 +426,26 @@
      *
      * @param {Event} event The hammer event
      *
-     * @typedef {object} Event.gesture The hammer object event
+     * @typedef {object} Event.direction The hammer direction
      *
      * @this Element
      */
     NavScroll.prototype.onDragEnd = function (event) {
         /* @type NavScroll */
         var self = $(this).data('st.navscroll'),
-            horizontal,
-            dragStartPosition = 'dragStartPosition';
+            horizontal;
 
         changeTransition(self, self.$content);
 
-        if (Hammer.DIRECTION_LEFT === event.gesture.direction || Hammer.DIRECTION_RIGHT === event.gesture.direction) {
-            horizontal = limitHorizontalValue(self, event, 0, true);
+        horizontal = limitHorizontalValue(self, event, 0, true);
 
-            self.$content.on('transitionend msTransitionEnd oTransitionEnd', null, self, dragTransitionEnd);
-            changeTransform(self.$content, 'translate3d(' + -horizontal + 'px, 0px, 0px)');
-        }
+        self.$content.on('transitionend msTransitionEnd oTransitionEnd', null, self, dragTransitionEnd);
+        changeTransform(self.$content, 'translate3d(' + -horizontal + 'px, 0px, 0px)');
 
         $(event.target).on('click.st.navscroll', onDragEndClick);
         refreshIndicator(self);
 
-        delete self[dragStartPosition];
+        delete self.dragStartPosition;
     };
 
     /**

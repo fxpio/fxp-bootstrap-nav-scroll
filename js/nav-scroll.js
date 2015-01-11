@@ -186,7 +186,7 @@
     function refreshIndicator(self) {
         var wrapperPosition = parseInt(self.$element.position().left, 10),
             position = parseInt(self.$content.position().left, 10) - wrapperPosition,
-            rightPosition = position + self.$content.outerWidth(),
+            rightPosition = position + self.$content.outerWidth() - 1,
             maxRight = self.$element.innerWidth();
 
         if (position < 0) {

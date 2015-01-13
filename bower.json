@@ -18,10 +18,8 @@
   "dependencies": {
     "bootstrap": ">=3.0",
     "jquery": ">=1.11.0",
+    "sonatra-hammer-scroll": "latest",
     "hammerjs": "2.0.*"
-  },
-  "dependencies": {
-    "sonatra-hammer-scroll": "latest"
   },
   "ignore": [
     "examples",

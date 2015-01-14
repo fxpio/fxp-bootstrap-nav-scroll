@@ -14,14 +14,12 @@
 /*global WebKitCSSMatrix*/
 /*global MSCSSMatrix*/
 /*global Hammer*/
-/*global CustomEvent*/
 
 /**
  * @param {jQuery} $
  *
  * @typedef {NavScroll}        NavScroll
  * @typedef {Number|undefined} NavScroll.$dropdownToggle
- * @typedef {Number|undefined} NavScroll.$dropdownMenu
  * @typedef {Number|undefined} NavScroll.dragStartPosition
  */
 (function ($) {
@@ -264,67 +262,6 @@
     }
 
     /**
-     * Action on hide dropdown event.
-     *
-     * @param {jQuery.Event|Event} event
-     *
-     * @typedef {NavScroll} Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onHideDropdown(event) {
-        var self = event.data;
-
-        if (undefined === self.$dropdownMenu) {
-            return;
-        }
-
-        self.$dropdownRestoreMenu.after(self.$dropdownMenu);
-        self.$dropdownRestoreMenu.remove();
-        self.$dropdownMenu.removeClass('dropdown-nav-scrollable');
-        self.$dropdownMenu.removeAttr('data-dropdown-restore-id');
-        self.$dropdownMenu.css('left', '');
-        self.$dropdownMenu.css('top', '');
-
-        delete self.$dropdownToggle;
-        delete self.$dropdownMenu;
-        delete self.$dropdownRestoreMenu;
-    }
-
-    /**
-     * Action on show dropdown event.
-     *
-     * @param {jQuery.Event|Event} event
-     *
-     * @typedef {NavScroll} Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onShowDropdown(event) {
-        var self = event.data,
-            ddId = 'dropdown-menu-original-' + self.guid;
-
-        if (undefined !== self.$dropdownMenu) {
-            onHideDropdown(event);
-        }
-
-        self.$dropdownToggle = $('> .dropdown-toggle', event.target);
-        self.$dropdownMenu = $('> .dropdown-menu', event.target);
-        self.$dropdownMenu.attr('data-dropdown-restore-id', ddId);
-        self.$dropdownRestoreMenu = $('<div class="dropdown-menu-restore-position"></div>');
-        self.$dropdownRestoreMenu.attr('data-dropdown-restore-for', ddId);
-        self.$dropdownMenu.after(self.$dropdownRestoreMenu);
-        self.$dropdownMenu.addClass('dropdown-nav-scrollable');
-        self.$dropdownMenu.css('left', Math.max(0, $(event.target).position().left));
-
-        if (!self.$dropdownMenu.parent().hasClass('navbar')) {
-            self.$dropdownMenu.css('top', $(event.target).position().top + $(event.target).outerHeight());
-        }
-
-        self.$element.before(self.$dropdownMenu);
-    }
-
-    /**
      * Refresh the indicator on end of scroll inertia transition.
      *
      * @param {jQuery.Event|Event} event
@@ -338,6 +275,36 @@
 
         self.$content.off('transitionend msTransitionEnd oTransitionEnd', dragTransitionEnd);
         refreshIndicator(self);
+    }
+
+    /**
+     * Action when dropdown is shown (to close the dropdown when the navscroll is in scrolling).
+     *
+     * @param {jQuery.Event} event
+     *
+     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
+     *
+     * @private
+     */
+    function onShownDropdown(event) {
+        var self = event.data;
+
+        self.$dropdownToggle = $('.dropdown-toggle', event.target);
+    }
+
+    /**
+     * Action when dropdown is hidden (to close the dropdown when the navscroll is in scrolling).
+     *
+     * @param {jQuery.Event} event
+     *
+     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
+     *
+     * @private
+     */
+    function onHideDropdown(event) {
+        var self = event.data;
+
+        delete self.$dropdownToggle;
     }
 
     // NAV SCROLL CLASS DEFINITION
@@ -359,10 +326,10 @@
         this.$element   = $(element);
         this.$content   = $('.' + this.options.classNav, this.$element);
 
-        this.$element.on('DOMMouseScroll mousewheel', null, this, onMouseScroll);
-        this.$element.on('show.bs.dropdown.st.nav-scroll', null, this, onShowDropdown);
-        this.$element.on('hide.bs.dropdown.st.nav-scroll', null, this, onHideDropdown);
-        this.$element.on('scroll.st.nav-scroll', preventScroll);
+        this.$element.on('DOMMouseScroll mousewheel', null, this, onMouseScroll)
+            .on('shown.bs.dropdown.st.navscroll', null, this, onShownDropdown)
+            .on('hide.bs.dropdown.st.navscroll', null, this, onHideDropdown)
+            .on('scroll.st.nav-scroll', preventScroll);
         $(window).on('resize.st.navscroll' + this.guid, null, this, this.resizeScroll);
 
         refreshIndicator(this);
@@ -371,6 +338,7 @@
 
         this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
         this.hammer.get('swipe').set({ enable: false });
+        this.hammer.get('tap').set({ enable: false });
         this.hammer.on('pan', $.proxy(this.onDrag, this.$element.get(0)));
         this.hammer.on('panend', $.proxy(this.onDragEnd, this.$element.get(0)));
     },
@@ -481,14 +449,11 @@
      * @this NavScroll
      */
     NavScroll.prototype.destroy = function () {
-        var event = new CustomEvent('destroy');
-        event.data = this;
-        onHideDropdown(event);
-        this.$element.off('DOMMouseScroll mousewheel', onMouseScroll);
-        this.$element.off('show.bs.dropdown.st.nav-scroll', onShowDropdown);
-        this.$element.off('hide.bs.dropdown.st.nav-scroll', onHideDropdown);
-        this.$element.off('scroll.st.nav-scroll', preventScroll);
-        this.$element.removeData('st.navscroll');
+        this.$element.off('DOMMouseScroll mousewheel', onMouseScroll)
+            .off('scroll.st.nav-scroll', preventScroll)
+            .off('shown.bs.dropdown.st.navscroll', onShownDropdown)
+            .off('hide.bs.dropdown.st.navscroll', onHideDropdown)
+            .removeData('st.navscroll');
         $(window).off('resize.st.navscroll' + this.guid, this.resizeScroll);
     };
 

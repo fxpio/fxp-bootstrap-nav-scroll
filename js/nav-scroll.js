@@ -369,15 +369,11 @@
     NavScroll.prototype.onDrag = function (event) {
         /* @type NavScroll */
         var self = $(this).data('st.navscroll'),
-            horizontal;
-
-        if (Hammer.DIRECTION_LEFT === event.direction || Hammer.DIRECTION_RIGHT === event.direction) {
             horizontal = limitHorizontalValue(self, event, self.options.maxBounce);
 
-            changeTransition(self, self.$content, 'none');
-            changeTransform(self.$content, 'translate3d(' + -horizontal + 'px, 0px, 0px)');
-            refreshIndicator(self);
-        }
+        changeTransition(self, self.$content, 'none');
+        changeTransform(self.$content, 'translate3d(' + -horizontal + 'px, 0px, 0px)');
+        refreshIndicator(self);
     };
 
     /**

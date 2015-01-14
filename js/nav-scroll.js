@@ -367,16 +367,7 @@
 
         refreshIndicator(this);
 
-        this.hammer = new Hammer(this.$element.get(0), {
-            tap: false,
-            transform: false,
-            release: false,
-            hold: false,
-            swipe: false,
-            drag_block_horizontal: true,
-            drag_lock_to_axis: true,
-            drag_min_distance: 3
-        });
+        this.hammer = new Hammer(this.$element.get(0));
 
         this.hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
         this.hammer.get('swipe').set({ enable: false });

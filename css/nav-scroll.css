@@ -1,19 +1,17 @@
-.nav-scrollable {
-  overflow: hidden;
+.nav-scrollable .hammer-scrollbar {
+  margin: 0;
 }
 .nav-scrollable .nav {
   float: inherit;
   white-space: nowrap;
-  display: inline-block;
+  display: block;
   margin: 0;
+  height: 50px;
+  width: 100%;
 }
 .nav-scrollable .nav > li {
   float: inherit;
   display: inline-block;
-}
-.nav-scrollable .nav.navbar-nav > li > a {
-  padding-top: 16px;
-  padding-bottom: 16px;
 }
 .nav-scrollable.is-nav-tabs + .panel,
 .nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel,
@@ -29,32 +27,44 @@
 .nav-scrollable.is-nav-pills {
   margin-bottom: 10px;
 }
-.nav-scrollable.nav-scrollable-has-previous {
-  -webkit-box-shadow: inset 23px 0px 23px -23px #aaaaaa;
-  box-shadow: inset 23px 0px 23px -23px #aaaaaa;
+.nav-scrollable.nav-scrollable-has-previous:before,
+.nav-scrollable > .nav-scrollable-has-previous:before {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  z-index: 1;
+  -webkit-box-shadow: 0px 0px 15px 5px #aaaaaa;
+  box-shadow: 0px 0px 15px 5px #aaaaaa;
 }
-.nav-scrollable.nav-scrollable-has-next {
-  -webkit-box-shadow: inset -23px 0px 23px -23px #aaaaaa;
-  box-shadow: inset -23px 0px 23px -23px #aaaaaa;
+.nav-scrollable.nav-scrollable-has-next:after,
+.nav-scrollable > .nav-scrollable-has-next:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  z-index: 1;
+  -webkit-box-shadow: 0px 0px 15px 5px #aaaaaa;
+  box-shadow: 0px 0px 15px 5px #aaaaaa;
 }
-.nav-scrollable.nav-scrollable-has-previous.nav-scrollable-has-next {
-  -webkit-box-shadow: inset 23px 0px 23px -23px #aaaaaa, inset -23px 0px 23px -23px #aaaaaa;
-  box-shadow: inset 23px 0px 23px -23px #aaaaaa, inset -23px 0px 23px -23px #aaaaaa;
+.navbar-inverse .nav-scrollable.nav-scrollable-has-previous:before,
+.navbar-inverse .nav-scrollable > .nav-scrollable-has-previous:before {
+  -webkit-box-shadow: 0px 0px 15px 5px #555555;
+  box-shadow: 0px 0px 15px 5px #555555;
 }
-.navbar-inverse .nav-scrollable.nav-scrollable-has-previous {
-  -webkit-box-shadow: inset 23px 0px 23px -23px #2f2f2f;
-  box-shadow: inset 23px 0px 23px -23px #2f2f2f;
+.navbar-inverse .nav-scrollable.nav-scrollable-has-next:after,
+.navbar-inverse .nav-scrollable > .nav-scrollable-has-next:after {
+  -webkit-box-shadow: 0px 0px 15px 5px #555555;
+  box-shadow: 0px 0px 15px 5px #555555;
 }
-.navbar-inverse .nav-scrollable.nav-scrollable-has-next {
-  -webkit-box-shadow: inset -23px 0px 23px -23px #2f2f2f;
-  box-shadow: inset -23px 0px 23px -23px #2f2f2f;
-}
-.navbar-inverse .nav-scrollable.nav-scrollable-has-previous.nav-scrollable-has-next {
-  -webkit-box-shadow: inset 23px 0px 23px -23px #2f2f2f, inset -23px 0px 23px -23px #aaaaaa;
-  box-shadow: inset 23px 0px 23px -23px #2f2f2f, inset -23px 0px 23px -23px #aaaaaa;
-}
-.navbar-fixed-top .nav-scrollable:last-child,
-.navbar-static-top .nav-scrollable:last-child {
+.navbar-fixed-top .nav-scrollable,
+.navbar-static-top .nav-scrollable {
   margin-right: 25px;
 }
 @media (max-width: 767px) {

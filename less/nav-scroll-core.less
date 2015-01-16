@@ -3,24 +3,21 @@
 // --------------------------------------------------
 
 .nav-scrollable {
-    overflow: hidden;
+    .hammer-scrollbar {
+        margin: 0;
+    }
 
     .nav {
         float: inherit;
         white-space: nowrap;
-        display: inline-block;
+        display: block;
         margin: 0;
+        height: 50px;
+        width: 100%;
 
         > li {
             float: inherit;
             display: inline-block;
-        }
-
-        &.navbar-nav {
-            > li > a {
-                padding-top: 16px;
-                padding-bottom: 16px;
-            }
         }
     }
 
@@ -40,31 +37,43 @@
         margin-bottom: 10px;
     }
 
-    &.nav-scrollable-has-previous {
-        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
+    &.nav-scrollable-has-previous:before,
+    > .nav-scrollable-has-previous:before {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        z-index: 1;
+        .box-shadow(~"0px 0px @{navbar-scroll-inner-shadow-width} @{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 
-    &.nav-scrollable-has-next {
-        .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
-    }
-
-    &.nav-scrollable-has-previous.nav-scrollable-has-next {
-        .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
+    &.nav-scrollable-has-next:after,
+    > .nav-scrollable-has-next:after {
+        content: "";
+        position: absolute;
+        display: block;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 0;
+        z-index: 1;
+        .box-shadow(~"0px 0px @{navbar-scroll-inner-shadow-width} @{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
     }
 }
 
 .navbar-inverse {
     .nav-scrollable {
-        &.nav-scrollable-has-previous {
-            .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
+        &.nav-scrollable-has-previous:before,
+        > .nav-scrollable-has-previous:before {
+            .box-shadow(~"0px 0px @{navbar-scroll-inner-shadow-width} @{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
         }
 
-        &.nav-scrollable-has-next {
-            .box-shadow(~"inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
-        }
-
-        &.nav-scrollable-has-previous.nav-scrollable-has-next {
-            .box-shadow(~"inset @{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}, inset -@{navbar-scroll-inner-shadow-size} 0px @{navbar-scroll-inner-shadow-size} -@{navbar-scroll-inner-shadow-size} @{navbar-scroll-default-inner-shadow-color}");
+        &.nav-scrollable-has-next:after,
+        > .nav-scrollable-has-next:after{
+            .box-shadow(~"0px 0px @{navbar-scroll-inner-shadow-width} @{navbar-scroll-inner-shadow-size} @{navbar-scroll-inverse-inner-shadow-color}");
         }
     }
 }
@@ -72,9 +81,7 @@
 .navbar-fixed-top,
 .navbar-static-top {
     .nav-scrollable {
-        &:last-child {
-            margin-right: 25px;
-        }
+        margin-right: 25px;
     }
 }
 

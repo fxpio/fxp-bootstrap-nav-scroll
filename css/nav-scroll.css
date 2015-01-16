@@ -2,15 +2,17 @@
   margin: 0;
 }
 .nav-scrollable .nav {
-  float: inherit;
+  float: none;
   white-space: nowrap;
   display: block;
   margin: 0;
   width: 100%;
+  height: 100%;
 }
 .nav-scrollable .nav > li {
-  float: inherit;
+  float: none;
   display: inline-block;
+  margin: 0;
 }
 .nav-scrollable.is-nav-tabs + .panel,
 .nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel,

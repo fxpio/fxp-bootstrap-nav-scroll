@@ -8,6 +8,7 @@
  */
 
 /*global jQuery*/
+/*global navigator*/
 /*global window*/
 /*global document*/
 /*global CSSMatrix*/
@@ -23,6 +24,15 @@
  */
 (function ($) {
     'use strict';
+
+    /**
+     * Check is browser is Firefox.
+     *
+     * @return Boolean
+     */
+    function isFirefox() {
+        return -1 !== navigator.userAgent.toLowerCase().indexOf('firefox');
+    }
 
     /**
      * Refreshes the left and right indicator, depending of the presence of
@@ -111,6 +121,11 @@
         this.guid     = jQuery.guid;
         this.options  = $.extend({}, NavScroll.DEFAULTS, options);
         this.$element = $(element);
+
+        if (isFirefox()) {
+            this.options.forceNativeScroll = true;
+        }
+
         this.$element
             .addClass('nav-scrollable')
             .hammerScroll($.extend(this.options, {'direction': 'horizontal'}))

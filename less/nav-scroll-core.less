@@ -16,6 +16,15 @@ div[data-nav-scroll="true"] {
             display: inline-block;
             margin: 0;
         }
+
+        &.navbar-nav {
+            > li {
+                > a {
+                    padding-top: @navbar-padding-vertical;
+                    padding-bottom: @navbar-padding-vertical;
+                }
+            }
+        }
     }
 }
 

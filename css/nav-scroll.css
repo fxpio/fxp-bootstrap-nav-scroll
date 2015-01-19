@@ -14,6 +14,11 @@ div[data-nav-scroll="true"] .nav > li {
   display: inline-block;
   margin: 0;
 }
+.nav-scrollable .nav.navbar-nav > li > a,
+div[data-nav-scroll="true"] .nav.navbar-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
 .nav-scrollable .hammer-scrollbar {
   margin: 0;
 }

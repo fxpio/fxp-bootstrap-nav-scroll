@@ -1,18 +1,28 @@
-.nav-scrollable .hammer-scrollbar {
-  margin: 0;
+.nav-scrollable,
+div[data-nav-scroll="true"] {
+  overflow: hidden;
 }
-.nav-scrollable .nav {
+.nav-scrollable .nav,
+div[data-nav-scroll="true"] .nav {
   float: none;
   white-space: nowrap;
-  display: block;
   margin: 0;
-  width: 100%;
-  height: 100%;
 }
-.nav-scrollable .nav > li {
+.nav-scrollable .nav > li,
+div[data-nav-scroll="true"] .nav > li {
   float: none;
   display: inline-block;
   margin: 0;
+}
+.nav-scrollable .hammer-scrollbar {
+  margin: 0;
+}
+.nav-scrollable .hammer-scrollbar + .hammer-scroll-content .nav:not(.navbar-nav) {
+  margin-bottom: 5px;
+}
+.nav-scrollable .hammer-scrollbar.hammer-scroll-inverse + .hammer-scroll-content .nav:not(.navbar-nav) {
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 .nav-scrollable.is-nav-tabs + .panel,
 .nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel,
@@ -28,8 +38,7 @@
 .nav-scrollable.is-nav-pills {
   margin-bottom: 10px;
 }
-.nav-scrollable.nav-scrollable-has-previous:before,
-.nav-scrollable > .nav-scrollable-has-previous:before {
+.nav-scrollable.nav-scrollable-has-previous:before {
   content: "";
   position: absolute;
   display: block;
@@ -41,8 +50,7 @@
   -webkit-box-shadow: 0px 0px 15px 5px #aaaaaa;
   box-shadow: 0px 0px 15px 5px #aaaaaa;
 }
-.nav-scrollable.nav-scrollable-has-next:after,
-.nav-scrollable > .nav-scrollable-has-next:after {
+.nav-scrollable.nav-scrollable-has-next:after {
   content: "";
   position: absolute;
   display: block;
@@ -54,13 +62,11 @@
   -webkit-box-shadow: 0px 0px 15px 5px #aaaaaa;
   box-shadow: 0px 0px 15px 5px #aaaaaa;
 }
-.navbar-inverse .nav-scrollable.nav-scrollable-has-previous:before,
-.navbar-inverse .nav-scrollable > .nav-scrollable-has-previous:before {
+.navbar-inverse .nav-scrollable.nav-scrollable-has-previous:before {
   -webkit-box-shadow: 0px 0px 15px 5px #555555;
   box-shadow: 0px 0px 15px 5px #555555;
 }
-.navbar-inverse .nav-scrollable.nav-scrollable-has-next:after,
-.navbar-inverse .nav-scrollable > .nav-scrollable-has-next:after {
+.navbar-inverse .nav-scrollable.nav-scrollable-has-next:after {
   -webkit-box-shadow: 0px 0px 15px 5px #555555;
   box-shadow: 0px 0px 15px 5px #555555;
 }

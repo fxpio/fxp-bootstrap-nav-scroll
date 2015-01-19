@@ -33,21 +33,21 @@
      * @private
      */
     function refreshIndicator(self) {
-        var position = self.$wrapper.hammerScroll('getScrollPosition'),
-            max = self.$wrapper.hammerScroll('getMaxScrollPosition');
+        var position = self.$element.hammerScroll('getScrollPosition'),
+            max = self.$element.hammerScroll('getMaxScrollPosition');
 
         if (position > 0) {
-            self.$content.addClass('nav-scrollable-has-previous');
+            self.$element.addClass('nav-scrollable-has-previous');
 
         } else {
-            self.$content.removeClass('nav-scrollable-has-previous');
+            self.$element.removeClass('nav-scrollable-has-previous');
         }
 
         if (position < max) {
-            self.$content.addClass('nav-scrollable-has-next');
+            self.$element.addClass('nav-scrollable-has-next');
 
         } else {
-            self.$content.removeClass('nav-scrollable-has-next');
+            self.$element.removeClass('nav-scrollable-has-next');
         }
 
         if (undefined !== self.$dropdownToggle) {
@@ -111,19 +111,24 @@
         this.guid     = jQuery.guid;
         this.options  = $.extend({}, NavScroll.DEFAULTS, options);
         this.$element = $(element);
-        this.$wrapper = this.options.useScroll || this.options.nativeScroll ?
-                $('.' + this.options.classNav, this.$element)
-            : this.$element;
-        this.$wrapper.hammerScroll($.extend(this.options, {'direction': 'horizontal'}));
-        this.$content = this.options.useScroll || this.options.nativeScroll ?
-                $('.hammer-scroll-content', this.$element)
-            : this.$wrapper;
         this.$element
+            .addClass('nav-scrollable')
+            .hammerScroll($.extend(this.options, {'direction': 'horizontal'}))
             .on('shown.bs.dropdown.st.navscroll', null, this, onShownDropdown)
             .on('hide.bs.dropdown.st.navscroll', null, this, onHideDropdown);
 
+        var $nav = $('.' + this.options.classNav, this.$element);
+
+        if ($nav.hasClass('nav-tabs')) {
+            this.$element.addClass('is-nav-tabs');
+        }
+
+        if ($nav.hasClass('nav-pills')) {
+            this.$element.addClass('is-nav-pills');
+        }
+
         if (!this.options.scrollbar) {
-            this.$wrapper.on('scrolling.st.hammerscroll.st.navscroll', null, this, scrolling);
+            this.$element.on('scrolling.st.hammerscroll.st.navscroll', null, this, scrolling);
             refreshIndicator(this);
         }
     },
@@ -148,11 +153,11 @@
      * @this NavScroll
      */
     NavScroll.prototype.destroy = function () {
-        this.$wrapper.hammerScroll('destroy');
-        this.$wrapper.off('scrolling.st.hammerscroll.st.navscroll', scrolling);
         this.$element
+            .off('scrolling.st.hammerscroll.st.navscroll', scrolling)
             .off('shown.bs.dropdown.st.navscroll', onShownDropdown)
-            .off('hide.bs.dropdown.st.navscroll', onHideDropdown);
+            .off('hide.bs.dropdown.st.navscroll', onHideDropdown)
+            .hammerScroll('destroy');
     };
 
 

@@ -119,7 +119,7 @@
      */
     var NavScroll = function (element, options) {
         this.guid     = jQuery.guid;
-        this.options  = $.extend({}, NavScroll.DEFAULTS, options);
+        this.options  = $.extend(true, {}, NavScroll.DEFAULTS, options);
         this.$element = $(element);
 
         if (isFirefox()) {
@@ -128,7 +128,7 @@
 
         this.$element
             .addClass('nav-scrollable')
-            .hammerScroll($.extend(this.options, {'direction': 'horizontal'}))
+            .hammerScroll($.extend(true, this.options, {'direction': 'horizontal'}))
             .on('shown.bs.dropdown.st.navscroll', null, this, onShownDropdown)
             .on('hide.bs.dropdown.st.navscroll', null, this, onHideDropdown);
 

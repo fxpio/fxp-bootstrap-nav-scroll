@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+/*global define*/
 /*global jQuery*/
 /*global navigator*/
 /*global window*/
@@ -18,11 +19,22 @@
 /**
  * @param {jQuery} $
  *
+ * @typedef {object}           define.amd
  * @typedef {NavScroll}        NavScroll
  * @typedef {Number|undefined} NavScroll.$dropdownToggle
  * @typedef {Number|undefined} NavScroll.dragStartPosition
  */
-(function ($) {
+(function (factory) {
+    'use strict';
+
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery', 'sonatra-hammer-scroll'], factory);
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
     'use strict';
 
     /**
@@ -226,4 +238,4 @@
         });
     });
 
-}(jQuery));
+}));

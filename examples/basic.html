@@ -224,12 +224,23 @@
         </div>
     </div>
 </div>
-
-<script src="../bower_components/jquery/dist/jquery.js"></script>
-<script src="../bower_components/bootstrap/js/dropdown.js"></script>
-<script src="../bower_components/hammerjs/hammer.js"></script>
-<script src="../bower_components/sonatra-hammer-scroll/js/hammer-scroll.js"></script>
-<script src="../bower_components/sonatra-bootstrap-dropdown-position/js/dropdown-position.js"></script>
-<script src="../js/nav-scroll.js"></script>
+<script>
+    var require = {
+        paths: {
+            'jquery': '../bower_components/jquery/dist/jquery',
+            'bootstrap': '../bower_components/bootstrap/js',
+            'hammerjs': '../bower_components/hammerjs/hammer',
+            'sonatra-hammer-scroll': '../bower_components/sonatra-hammer-scroll/js/hammer-scroll',
+            'sonatra-dropdown-position': '../bower_components/sonatra-bootstrap-dropdown-position/js/dropdown-position',
+            'sonatra-bootstrap-nav-scroll': '../js/nav-scroll'
+        },
+        deps: ['hammerjs', 'sonatra-dropdown-position', 'sonatra-bootstrap-nav-scroll'],
+        callback: function (Hammer) {
+            window.Hammer = Hammer;
+            $(window).trigger('load');
+        }
+    };
+</script>
+<script src="../bower_components/requirejs/require.js" async="async"></script>
 </body>
 </html>

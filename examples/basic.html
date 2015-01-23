@@ -234,6 +234,9 @@
             'sonatra-dropdown-position': '../bower_components/sonatra-bootstrap-dropdown-position/js/dropdown-position',
             'sonatra-bootstrap-nav-scroll': '../js/nav-scroll'
         },
+        shim: {
+            'bootstrap/dropdown': ['jquery']
+        },
         deps: ['hammerjs', 'sonatra-dropdown-position', 'sonatra-bootstrap-nav-scroll'],
         callback: function (Hammer) {
             window.Hammer = Hammer;

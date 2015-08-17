@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Basic example - Sonatra Bootstrap Nav Scroll</title>
     <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="../bower_components/sonatra-hammer-scroll/css/hammer-scroll.css" rel="stylesheet">
-    <link href="../bower_components/sonatra-bootstrap-dropdown-position/css/dropdown-position.css" rel="stylesheet">
+    <link href="../css/scroller.css" rel="stylesheet">
+    <link href="../css/dropdown-position.css" rel="stylesheet">
     <link href="../css/nav-scroll.css" rel="stylesheet">
     <style>
         body > .container {
@@ -120,7 +120,7 @@
 
             <p>This is a paragraph.</p>
 
-            <div class="" data-nav-scroll="true" data-scrollbar="false" data-native-scroll="true">
+            <div class="" data-nav-scroll="true" data-scrollbar="true">
                 <ul class="nav nav-pills">
                     <li><a href="#">Pill 1</a></li>
                     <li class="active"><a href="#">Pill 2</a></li>
@@ -229,17 +229,15 @@
         paths: {
             'jquery': '../bower_components/jquery/dist/jquery',
             'bootstrap': '../bower_components/bootstrap/js',
-            'hammerjs': '../bower_components/hammerjs/hammer',
-            'sonatra-hammer-scroll': '../bower_components/sonatra-hammer-scroll/js/hammer-scroll',
+            'sonatra-jquery-scroller': '../bower_components/sonatra-jquery-scroller/js/scroller',
             'sonatra-dropdown-position': '../bower_components/sonatra-bootstrap-dropdown-position/js/dropdown-position',
             'sonatra-bootstrap-nav-scroll': '../js/nav-scroll'
         },
         shim: {
             'bootstrap/dropdown': ['jquery']
         },
-        deps: ['hammerjs', 'sonatra-dropdown-position', 'sonatra-bootstrap-nav-scroll'],
-        callback: function (Hammer) {
-            window.Hammer = Hammer;
+        deps: ['sonatra-dropdown-position', 'sonatra-bootstrap-nav-scroll'],
+        callback: function () {
             $(window).trigger('load');
         }
     };

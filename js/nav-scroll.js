@@ -18,33 +18,19 @@
 
 /**
  * @param {jQuery} $
- *
- * @typedef {object}           define.amd
- * @typedef {NavScroll}        NavScroll
- * @typedef {Number|undefined} NavScroll.$dropdownToggle
- * @typedef {Number|undefined} NavScroll.dragStartPosition
  */
 (function (factory) {
     'use strict';
 
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery', 'sonatra-hammer-scroll'], factory);
+        define(['jquery', 'sonatra-jquery-scroller'], factory);
     } else {
         // Browser globals
         factory(jQuery);
     }
 }(function ($) {
     'use strict';
-
-    /**
-     * Check is browser is Firefox.
-     *
-     * @return Boolean
-     */
-    function isFirefox() {
-        return -1 !== navigator.userAgent.toLowerCase().indexOf('firefox');
-    }
 
     /**
      * Refreshes the left and right indicator, depending of the presence of
@@ -55,8 +41,8 @@
      * @private
      */
     function refreshIndicator(self) {
-        var position = self.$element.hammerScroll('getScrollPosition'),
-            max = self.$element.hammerScroll('getMaxScrollPosition');
+        var position = self.$element.scroller('getScrollPosition'),
+            max = self.$element.scroller('getMaxScrollPosition');
 
         if (position > 0) {
             self.$element.addClass('nav-scrollable-has-previous');
@@ -72,7 +58,7 @@
             self.$element.removeClass('nav-scrollable-has-next');
         }
 
-        if (undefined !== self.$dropdownToggle) {
+        if (null !== self.$dropdownToggle) {
             self.$dropdownToggle.dropdown('toggle');
         }
     }
@@ -113,7 +99,7 @@
      * @private
      */
     function onHideDropdown(event) {
-        delete event.data.$dropdownToggle;
+        event.data.$dropdownToggle = null;
     }
 
     // NAV SCROLL CLASS DEFINITION
@@ -125,22 +111,17 @@
      * @param {string|elements|object|jQuery} element
      * @param {object}                        options
      *
-     * @typedef {Manager} NavScroll.hammer The hammer manager
-     *
      * @this NavScroll
      */
     var NavScroll = function (element, options) {
         this.guid     = jQuery.guid;
         this.options  = $.extend(true, {}, NavScroll.DEFAULTS, options);
         this.$element = $(element);
-
-        if (isFirefox()) {
-            this.options.forceNativeScroll = true;
-        }
+        this.$dropdownToggle = null;
 
         this.$element
             .addClass('nav-scrollable')
-            .hammerScroll($.extend(true, this.options, {'direction': 'horizontal'}))
+            .scroller($.extend(true, this.options, {'direction': 'horizontal'}))
             .on('shown.bs.dropdown.st.navscroll', null, this, onShownDropdown)
             .on('hide.bs.dropdown.st.navscroll', null, this, onHideDropdown);
 
@@ -155,7 +136,7 @@
         }
 
         if (!this.options.scrollbar) {
-            this.$element.on('scrolling.st.hammerscroll.st.navscroll', null, this, scrolling);
+            this.$element.on('scrolling.st.scroller.st.navscroll', null, this, scrolling);
             refreshIndicator(this);
         }
     },
@@ -169,9 +150,7 @@
     NavScroll.DEFAULTS = {
         classNav:         'nav',
         scrollbar:        false,
-        useScroll:        false,
-        nativeScroll:     false,
-        scrollbarInverse: true
+        scrollbarInverse: false
     };
 
     /**
@@ -181,10 +160,12 @@
      */
     NavScroll.prototype.destroy = function () {
         this.$element
-            .off('scrolling.st.hammerscroll.st.navscroll', scrolling)
+            .off('scrolling.st.scroller.st.navscroll', scrolling)
             .off('shown.bs.dropdown.st.navscroll', onShownDropdown)
             .off('hide.bs.dropdown.st.navscroll', onHideDropdown)
-            .hammerScroll('destroy');
+            .scroller('destroy');
+
+        delete this.$dropdownToggle;
     };
 
 

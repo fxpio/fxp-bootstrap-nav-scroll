@@ -16,13 +16,12 @@
   "license": "MIT",
   "homepage": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll",
   "dependencies": {
-    "bootstrap": ">=3.0",
-    "jquery": ">=1.11.0",
-    "sonatra-hammer-scroll": "latest"
+    "bootstrap": "^3.3.0",
+    "jquery": "^2.1.0",
+    "sonatra-jquery-scroller": "latest"
   },
   "devDependencies": {
     "requirejs": "~2",
-    "hammerjs": "2.0.*",
     "sonatra-bootstrap-dropdown-position": "latest"
   },
   "ignore": [

@@ -115,7 +115,7 @@
      */
     function refreshIndicator(self) {
         var position = self.$element.scroller('getScrollPosition'),
-            max = self.$element.scroller('getMaxScrollPosition');
+            max = self.$element.scroller('getMaxScrollPosition') - 1;
 
         if (position > 0) {
             self.$element.addClass('nav-scrollable-has-previous');

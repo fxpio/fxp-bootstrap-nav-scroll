@@ -33,6 +33,79 @@
     'use strict';
 
     /**
+     * Stop the scrolling on press.
+     *
+     * @param {jQuery.Event|Event|NavScroll} event The jquery event or nav scroll instance
+     *
+     * @private
+     */
+    function onEndScroll(event) {
+        var self = (undefined !== event.data) ? event.data : event;
+
+        if (self.$element.data('st-scroll-timeout')) {
+            window.clearInterval(self.$element.data('st-scroll-timeout'));
+            self.$element.removeData('st-scroll-timeout');
+        }
+    }
+
+    /**
+     * Action when the previous button is pressed.
+     *
+     * @param {NavScroll} self      The nav scroll instance
+     * @param {String}    className The css class of button action
+     * @param {Number}    delta     The delta of the scrolling
+     *
+     * @private
+     */
+    function scrollNav(self, className, delta) {
+        var timeout;
+
+        if (!self.$element.hasClass(className)) {
+            onEndScroll(self);
+
+            return;
+        }
+
+        self.$element.scroller('setScrollPosition', self.$element.scroller('getScrollPosition') + delta);
+
+        timeout = window.setInterval(function () {
+            self.$element.scroller('setScrollPosition', self.$element.scroller('getScrollPosition') + delta);
+        }, 16);
+
+        self.$element.data('st-scroll-timeout', timeout);
+    }
+
+    /**
+     * Action when the previous button is pressed.
+     *
+     * @param {jQuery.Event} event
+     *
+     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
+     *
+     * @private
+     */
+    function onPrevious(event) {
+        scrollNav(event.data, 'nav-scrollable-has-previous', -15);
+
+        return false;
+    }
+
+    /**
+     * Action when the next button is pressed.
+     *
+     * @param {jQuery.Event} event
+     *
+     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
+     *
+     * @private
+     */
+    function onNext(event) {
+        scrollNav(event.data, 'nav-scrollable-has-next', 15);
+
+        return false;
+    }
+
+    /**
      * Refreshes the left and right indicator, depending of the presence of
      * items.
      *
@@ -118,6 +191,8 @@
         this.options  = $.extend(true, {}, NavScroll.DEFAULTS, options);
         this.$element = $(element);
         this.$dropdownToggle = null;
+        this.$menuPrevious = null;
+        this.$menuNext = null;
 
         this.$element
             .addClass('nav-scrollable')
@@ -135,10 +210,29 @@
             this.$element.addClass('is-nav-pills');
         }
 
-        if (!this.options.scrollbar) {
-            this.$element.on('scrolling.st.scroller.st.navscroll', null, this, scrolling);
-            refreshIndicator(this);
+        // menu items
+        this.$menuPrevious = $('> .nav-scrollable-menu.nav-scrollable-prev', this.$element);
+        this.$menuNext = $('> .nav-scrollable-menu.nav-scrollable-next', this.$element);
+
+        if (0 === this.$menuNext.length) {
+            this.$menuNext = $('<div class="nav-scrollable-menu nav-scrollable-next"><span class="glyphicon glyphicon-chevron-right"></span></div>');
+            this.$element.prepend(this.$menuNext);
         }
+
+        if (0 === this.$menuPrevious.length) {
+            this.$menuPrevious = $('<div class="nav-scrollable-menu nav-scrollable-prev"><span class="glyphicon glyphicon-chevron-left"></span></div>');
+            this.$element.prepend(this.$menuPrevious);
+        }
+
+        // menu events
+        this.$element
+            .on('scrolling.st.scroller.st.navscroll', null, this, scrolling)
+            .on('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-prev', this, onPrevious)
+            .on('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-next', this, onNext)
+            .on('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', this, onEndScroll);
+        $(window).on('resize.st.navscroll' + this.guid, null, this, scrolling);
+
+        refreshIndicator(this);
     },
         old;
 
@@ -163,8 +257,17 @@
             .off('scrolling.st.scroller.st.navscroll', scrolling)
             .off('shown.bs.dropdown.st.navscroll', onShownDropdown)
             .off('hide.bs.dropdown.st.navscroll', onHideDropdown)
+            .off('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-prev', onPrevious)
+            .off('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-next', onNext)
+            .off('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', onEndScroll)
             .scroller('destroy');
+        $(window).off('resize.st.navscroll' + this.guid, scrolling);
 
+        this.$menuPrevious.remove();
+        this.$menuNext.remove();
+
+        delete this.$menuPrevious;
+        delete this.$menuNext;
         delete this.$dropdownToggle;
     };
 

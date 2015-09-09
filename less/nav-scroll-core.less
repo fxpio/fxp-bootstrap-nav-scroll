@@ -7,14 +7,15 @@ div[data-nav-scroll="true"] {
     overflow: hidden;
 
     .nav {
+        display: table;
         float: none;
-        white-space: nowrap;
         margin: 0;
 
         > li {
+            display: table-cell;
             float: none;
-            display: inline-block;
             margin: 0;
+            vertical-align: middle;
         }
 
         &.navbar-nav {

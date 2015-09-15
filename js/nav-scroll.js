@@ -265,6 +265,7 @@
 
         this.$menuPrevious.remove();
         this.$menuNext.remove();
+        this.$element.removeData('st.navscroll');
 
         delete this.$menuPrevious;
         delete this.$menuNext;

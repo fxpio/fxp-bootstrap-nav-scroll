@@ -261,6 +261,11 @@
             .off('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-next', onNext)
             .off('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', onEndScroll)
             .scroller('destroy');
+        this.$element
+            .removeClass('is-nav-tabs')
+            .removeClass('is-nav-pills')
+            .removeClass('nav-scrollable-has-previous')
+            .removeClass('nav-scrollable-has-next');
         $(window).off('resize.st.navscroll' + this.guid, scrolling);
 
         this.$menuPrevious.remove();

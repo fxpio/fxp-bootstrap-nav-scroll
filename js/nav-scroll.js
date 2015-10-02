@@ -109,11 +109,12 @@
      * Refreshes the left and right indicator, depending of the presence of
      * items.
      *
-     * @param {NavScroll} self The nav scroll instance
+     * @param {NavScroll} self         The nav scroll instance
+     * @param {Boolean}   hideDropdown Hide the dropdown
      *
      * @private
      */
-    function refreshIndicator(self) {
+    function refreshIndicator(self, hideDropdown) {
         var position = self.$element.scroller('getScrollPosition'),
             max = self.$element.scroller('getMaxScrollPosition') - 1;
 
@@ -131,7 +132,7 @@
             self.$element.removeClass('nav-scrollable-has-next');
         }
 
-        if (null !== self.$dropdownToggle) {
+        if (hideDropdown && null !== self.$dropdownToggle) {
             self.$dropdownToggle.dropdown('toggle');
         }
     }
@@ -146,7 +147,7 @@
      * @private
      */
     function scrolling(event) {
-        refreshIndicator(event.data);
+        refreshIndicator(event.data, 'resize' !== event.type);
     }
 
     /**
@@ -232,7 +233,7 @@
             .on('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', this, onEndScroll);
         $(window).on('resize.st.navscroll' + this.guid, null, this, scrolling);
 
-        refreshIndicator(this);
+        refreshIndicator(this, true);
     },
         old;
 

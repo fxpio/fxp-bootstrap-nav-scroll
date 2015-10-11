@@ -216,12 +216,12 @@
         this.$menuNext = $('> .nav-scrollable-menu.nav-scrollable-next', this.$element);
 
         if (0 === this.$menuNext.length) {
-            this.$menuNext = $('<div class="nav-scrollable-menu nav-scrollable-next"><span class="glyphicon glyphicon-chevron-right"></span></div>');
+            this.$menuNext = $('<div class="nav-scrollable-menu nav-scrollable-next">' + this.options.nextIcon + '</div>');
             this.$element.prepend(this.$menuNext);
         }
 
         if (0 === this.$menuPrevious.length) {
-            this.$menuPrevious = $('<div class="nav-scrollable-menu nav-scrollable-prev"><span class="glyphicon glyphicon-chevron-left"></span></div>');
+            this.$menuPrevious = $('<div class="nav-scrollable-menu nav-scrollable-prev">' + this.options.previousIcon + '</div>');
             this.$element.prepend(this.$menuPrevious);
         }
 
@@ -245,7 +245,9 @@
     NavScroll.DEFAULTS = {
         classNav:         'nav',
         scrollbar:        false,
-        scrollbarInverse: false
+        scrollbarInverse: false,
+        previousIcon: '<span class="glyphicon glyphicon-chevron-right"></span>',
+        nextIcon: '<span class="glyphicon glyphicon-chevron-left"></span>'
     };
 
     /**

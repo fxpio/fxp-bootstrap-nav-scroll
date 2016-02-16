@@ -113,10 +113,6 @@ div[data-nav-scroll="true"] {
     &.nav-scrollable-has-next .nav-scrollable-next {
         opacity: 1;
         cursor: pointer;
-
-        &:hover {
-            background-color: @nav-link-hover-bg;
-        }
     }
 
     &:not(.nav-scrollable-has-previous):not(.nav-scrollable-has-next) {
@@ -133,28 +129,6 @@ div[data-nav-scroll="true"] {
             line-height: @navbar-height;
             padding-top: 0;
             padding-bottom: 0;
-        }
-    }
-}
-
-.navbar-inverse {
-    .nav-scrollable {
-        .nav-scrollable-menu {
-            color: @navbar-inverse-link-color;
-        }
-
-        &.nav-scrollable-has-previous .nav-scrollable-prev,
-        &.nav-scrollable-has-next .nav-scrollable-next {
-            &:hover,
-            &:focus {
-                color: @navbar-inverse-link-hover-color;
-                background-color: @navbar-inverse-link-hover-bg;
-            }
-
-            &:active {
-                color: @navbar-inverse-link-active-color;
-                background-color: @navbar-inverse-link-active-bg;
-            }
         }
     }
 }

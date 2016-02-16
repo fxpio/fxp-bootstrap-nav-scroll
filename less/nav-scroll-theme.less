@@ -1,0 +1,34 @@
+//
+// Nav scrollable Theme
+// --------------------------------------------------
+
+.nav-scrollable {
+    &.nav-scrollable-has-previous .nav-scrollable-prev,
+    &.nav-scrollable-has-next .nav-scrollable-next {
+        &:hover {
+            background-color: @nav-link-hover-bg;
+        }
+    }
+}
+
+.navbar-inverse {
+    .nav-scrollable {
+        .nav-scrollable-menu {
+            color: @navbar-inverse-link-color;
+        }
+
+        &.nav-scrollable-has-previous .nav-scrollable-prev,
+        &.nav-scrollable-has-next .nav-scrollable-next {
+            &:hover,
+            &:focus {
+                color: @navbar-inverse-link-hover-color;
+                background-color: @navbar-inverse-link-hover-bg;
+            }
+
+            &:active {
+                color: @navbar-inverse-link-active-color;
+                background-color: @navbar-inverse-link-active-bg;
+            }
+        }
+    }
+}

@@ -38,7 +38,7 @@ div[data-nav-scroll="true"] {
 }
 
 .nav-scrollable {
-    padding: 0 28px;
+    padding: 0 26px;
     position: relative;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -57,7 +57,7 @@ div[data-nav-scroll="true"] {
         height: 100%;
         padding-left: @nav-scrollable-menu-padding-horizontal;
         padding-right: @nav-scrollable-menu-padding-horizontal;
-        opacity: @nav-scrollable-menu-disabled-opacity;
+        opacity: 0;
         .transition(@nav-scroll-btn-transition);
 
         &.nav-scrollable-prev {
@@ -111,6 +111,7 @@ div[data-nav-scroll="true"] {
 
     &.nav-scrollable-has-previous .nav-scrollable-prev,
     &.nav-scrollable-has-next .nav-scrollable-next {
+        z-index: 1;
         opacity: 1;
         cursor: pointer;
     }

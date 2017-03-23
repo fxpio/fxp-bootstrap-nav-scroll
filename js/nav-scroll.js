@@ -246,8 +246,8 @@
         classNav:         'nav',
         scrollbar:        false,
         scrollbarInverse: false,
-        previousIcon: '<span class="glyphicon glyphicon-chevron-right"></span>',
-        nextIcon: '<span class="glyphicon glyphicon-chevron-left"></span>'
+        previousIcon: '<span class="glyphicon glyphicon-chevron-left"></span>',
+        nextIcon: '<span class="glyphicon glyphicon-chevron-right"></span>'
     };
 
     /**

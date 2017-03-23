@@ -234,6 +234,10 @@
         $(window).on('resize.st.navscroll' + this.guid, null, this, scrolling);
 
         refreshIndicator(this, true);
+
+        if (this.options.initscrollToActiveItem) {
+            this.scrollToActiveItem();
+        }
     },
         old;
 
@@ -243,11 +247,35 @@
      * @type {object}
      */
     NavScroll.DEFAULTS = {
-        classNav:         'nav',
-        scrollbar:        false,
-        scrollbarInverse: false,
-        previousIcon: '<span class="glyphicon glyphicon-chevron-left"></span>',
-        nextIcon: '<span class="glyphicon glyphicon-chevron-right"></span>'
+        classNav:               'nav',
+        scrollbar:              false,
+        scrollbarInverse:       false,
+        initscrollToActiveItem: true,
+        previousIcon:           '<span class="glyphicon glyphicon-chevron-left"></span>',
+        nextIcon:               '<span class="glyphicon glyphicon-chevron-right"></span>'
+    };
+
+    /**
+     * Scroll to the active item.
+     *
+     * @this NavScroll
+     */
+    NavScroll.prototype.scrollToActiveItem = function () {
+        var $nav = $('.' + this.options.classNav, this.$element),
+            $active = $('> li.active', $nav),
+            navWidth,
+            activePosition;
+
+        if (0 === $active.length) {
+            return;
+        }
+
+        activePosition = $active.position().left + $active.outerWidth();
+        navWidth = $nav.parent().innerWidth();
+
+        if (activePosition >= navWidth) {
+            this.$element.scroller('setScrollPosition', activePosition - navWidth);
+        }
     };
 
     /**

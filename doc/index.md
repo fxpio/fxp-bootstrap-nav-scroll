@@ -13,22 +13,8 @@ This library require:
 Installation
 ------------
 
-Installation is a quick:
-
-Add library in your `bower.json`:
-
-```json
-{
-    "dependencies": {
-        "sonatra-bootstrap-nav-scroll": "latest"
-    }
-}
 ```
-
-Launch bower:
-
-```bash
-$ bower install
+npm install @sonatra/bootstrap-nav-scroll --save
 ```
 
 Dev installation
@@ -38,12 +24,6 @@ Dev installation
 
 ```
 npm install
-```
-
-### Use Bower
-
-```
-bower install
 ```
 
 ### Use grunt

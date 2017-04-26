@@ -4,7 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Basic example - Sonatra Bootstrap Nav Scroll</title>
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../css/scroller.css" rel="stylesheet">
     <link href="../css/dropdown-position.css" rel="stylesheet">
     <link href="../css/nav-scroll.css" rel="stylesheet">
@@ -227,10 +227,10 @@
 <script>
     var require = {
         paths: {
-            'jquery': '../bower_components/jquery/dist/jquery',
-            'bootstrap': '../bower_components/bootstrap/js',
-            'sonatra-jquery-scroller': '../bower_components/sonatra-jquery-scroller/js/scroller',
-            'sonatra-dropdown-position': '../bower_components/sonatra-bootstrap-dropdown-position/js/dropdown-position',
+            'jquery': '../node_modules/jquery/dist/jquery',
+            'bootstrap': '../node_modules/bootstrap',
+            'sonatra-jquery-scroller': '../node_modules/@sonatra/jquery-scroller/js/scroller',
+            'sonatra-dropdown-position': '../node_modules/@sonatra/bootstrap-dropdown-position/js/dropdown-position',
             'sonatra-bootstrap-nav-scroll': '../js/nav-scroll'
         },
         shim: {
@@ -242,6 +242,6 @@
         }
     };
 </script>
-<script src="../bower_components/requirejs/require.js" async="async"></script>
+<script src="../node_modules/requirejs/require.js" async="async"></script>
 </body>
 </html>

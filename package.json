@@ -18,7 +18,7 @@
     "url": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll.git"
   },
   "bugs": {
-    "url" : "https://github.com/sonatra/sonatra-bootstrap-nav-scroll/issues"
+    "url": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll/issues"
   },
   "engines": {},
   "main": "js/nav-scroll.js",

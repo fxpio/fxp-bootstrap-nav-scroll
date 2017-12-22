@@ -23,9 +23,9 @@
   "engines": {},
   "main": "js/nav-scroll.js",
   "dependencies": {
-    "jquery": "^2.1.0",
-    "bootstrap": "^3.3.0",
-    "@sonatra/jquery-scroller": "git://github.com/sonatra/sonatra-jquery-scroller.git#master"
+    "@sonatra/jquery-scroller": "git://github.com/sonatra/sonatra-jquery-scroller.git#master",
+    "bootstrap": "^3.3.7",
+    "jquery": "^2.2.0||^3.2.0"
   },
   "devDependencies": {
     "@sonatra/bootstrap-dropdown-position": "git://github.com/sonatra/sonatra-bootstrap-dropdown-position.git#master",

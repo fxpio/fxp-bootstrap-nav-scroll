@@ -1,7 +1,7 @@
-Sonatra Bootstrap Nav Scroll
-============================
+Fxp Bootstrap Nav Scroll
+========================
 
-Sonatra Bootstrap Nav Scroll is a simplistic javascript scroller with Hammerjs for Bootstrap Nav.
+Fxp Bootstrap Nav Scroll is a simplistic javascript scroller with Hammerjs for Bootstrap Nav.
 
 Documentation
 -------------
@@ -26,10 +26,10 @@ This javascript component is under the MIT license. See the complete license:
 About
 -----
 
-Sonatra Bootstrap Nav Scroll is a [sonatra](https://github.com/sonatra) initiative.
-See also the list of [contributors](https://github.com/sonatra/sonatra-bootstrap-nav-scroll/graphs/contributors).
+Fxp Bootstrap Nav Scroll is a [François Pluchino](https://github.com/francoispluchino) initiative.
+See also the list of [contributors](https://github.com/fxpio/fxp-bootstrap-nav-scroll/graphs/contributors).
 
 Reporting an issue or a feature request
 ---------------------------------------
 
-Issues and feature requests are tracked in the [Github issue tracker](https://github.com/sonatra/sonatra-bootstrap-nav-scroll/issues).
+Issues and feature requests are tracked in the [Github issue tracker](https://github.com/fxpio/fxp-bootstrap-nav-scroll/issues).

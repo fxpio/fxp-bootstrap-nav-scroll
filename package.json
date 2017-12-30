@@ -1,8 +1,8 @@
 {
-  "name": "@sonatra/bootstrap-nav-scroll",
+  "name": "@fxp/bootstrap-nav-scroll",
   "version": "1.0.0",
   "license": "MIT",
-  "author": "François Pluchino <francois.pluchino@sonatra.com>",
+  "author": "François Pluchino <francois.pluchino@gmail.com>",
   "contributors": [],
   "description": "A simplistic javascript scroller with Hammerjs for Bootstrap Nav",
   "keywords": [
@@ -12,23 +12,23 @@
     "nav",
     "jquery"
   ],
-  "homepage": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll",
+  "homepage": "https://github.com/fxpio/fxp-bootstrap-nav-scroll",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll.git"
+    "url": "https://github.com/fxpio/fxp-bootstrap-nav-scroll.git"
   },
   "bugs": {
-    "url": "https://github.com/sonatra/sonatra-bootstrap-nav-scroll/issues"
+    "url": "https://github.com/fxpio/fxp-bootstrap-nav-scroll/issues"
   },
   "engines": {},
   "main": "js/nav-scroll.js",
   "dependencies": {
-    "@sonatra/jquery-scroller": "git://github.com/sonatra/sonatra-jquery-scroller.git#master",
+    "@fxp/jquery-scroller": "git://github.com/fxpio/fxp-jquery-scroller.git#master",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2.0||^3.2.0"
   },
   "devDependencies": {
-    "@sonatra/bootstrap-dropdown-position": "git://github.com/sonatra/sonatra-bootstrap-dropdown-position.git#master",
+    "@fxp/bootstrap-dropdown-position": "git://github.com/fxpio/fxp-bootstrap-dropdown-position.git#master",
     "grunt": "^1.0.1",
     "grunt-browser-sync": "^2.2.0",
     "grunt-cli": "^1.2.0",

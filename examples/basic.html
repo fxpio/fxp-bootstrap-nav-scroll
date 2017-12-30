@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-    <title>Basic example - Sonatra Bootstrap Nav Scroll</title>
+    <title>Basic example - Fxp Bootstrap Nav Scroll</title>
     <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="../css/scroller.css" rel="stylesheet">
     <link href="../css/dropdown-position.css" rel="stylesheet">
@@ -229,14 +229,14 @@
         paths: {
             'jquery': '../node_modules/jquery/dist/jquery',
             'bootstrap/js/dropdown': '../node_modules/bootstrap/js/dropdown',
-            'sonatra-jquery-scroller': '../node_modules/@sonatra/jquery-scroller/js/scroller',
-            'sonatra-dropdown-position': '../node_modules/@sonatra/bootstrap-dropdown-position/js/dropdown-position',
-            'sonatra-bootstrap-nav-scroll': '../js/nav-scroll'
+            'fxp-jquery-scroller': '../node_modules/@fxp/jquery-scroller/js/scroller',
+            'fxp-dropdown-position': '../node_modules/@fxp/bootstrap-dropdown-position/js/dropdown-position',
+            'fxp-bootstrap-nav-scroll': '../js/nav-scroll'
         },
         shim: {
             'bootstrap/js/dropdown': ['jquery']
         },
-        deps: ['sonatra-dropdown-position', 'sonatra-bootstrap-nav-scroll'],
+        deps: ['fxp-dropdown-position', 'fxp-bootstrap-nav-scroll'],
         callback: function () {
             $(window).trigger('load');
         }

@@ -1,7 +1,7 @@
 /*
- * This file is part of the Sonatra package.
+ * This file is part of the Fxp package.
  *
- * (c) François Pluchino <francois.pluchino@sonatra.com>
+ * (c) François Pluchino <francois.pluchino@gmail.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -24,7 +24,7 @@
 
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
-        define(['jquery', 'sonatra-jquery-scroller'], factory);
+        define(['jquery', 'fxp-jquery-scroller'], factory);
     } else {
         // Browser globals
         factory(jQuery);
@@ -198,8 +198,8 @@
         this.$element
             .addClass('nav-scrollable')
             .scroller($.extend(true, this.options, {'direction': 'horizontal'}))
-            .on('shown.bs.dropdown.st.navscroll', null, this, onShownDropdown)
-            .on('hide.bs.dropdown.st.navscroll', null, this, onHideDropdown);
+            .on('shown.bs.dropdown.fxp.navscroll', null, this, onShownDropdown)
+            .on('hide.bs.dropdown.fxp.navscroll', null, this, onHideDropdown);
 
         var $nav = $('.' + this.options.classNav, this.$element);
 
@@ -227,11 +227,11 @@
 
         // menu events
         this.$element
-            .on('scrolling.st.scroller.st.navscroll', null, this, scrolling)
-            .on('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-prev', this, onPrevious)
-            .on('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-next', this, onNext)
-            .on('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', this, onEndScroll);
-        $(window).on('resize.st.navscroll' + this.guid, null, this, scrolling);
+            .on('scrolling.fxp.scroller.fxp.navscroll', null, this, scrolling)
+            .on('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-prev', this, onPrevious)
+            .on('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-next', this, onNext)
+            .on('mouseup.fxp.navscroll mouseout.fxp.navscroll touchend.fxp.navscroll touchcancel.fxp.navscroll', '> .nav-scrollable-menu', this, onEndScroll);
+        $(window).on('resize.fxp.navscroll' + this.guid, null, this, scrolling);
 
         refreshIndicator(this, true);
 
@@ -285,19 +285,19 @@
      */
     NavScroll.prototype.destroy = function () {
         this.$element
-            .off('scrolling.st.scroller.st.navscroll', scrolling)
-            .off('shown.bs.dropdown.st.navscroll', onShownDropdown)
-            .off('hide.bs.dropdown.st.navscroll', onHideDropdown)
-            .off('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-prev', onPrevious)
-            .off('mousedown.st.navscroll touchstart.st.navscroll', '> .nav-scrollable-next', onNext)
-            .off('mouseup.st.navscroll mouseout.st.navscroll touchend.st.navscroll touchcancel.st.navscroll', '> .nav-scrollable-menu', onEndScroll)
+            .off('scrolling.fxp.scroller.fxp.navscroll', scrolling)
+            .off('shown.bs.dropdown.fxp.navscroll', onShownDropdown)
+            .off('hide.bs.dropdown.fxp.navscroll', onHideDropdown)
+            .off('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-prev', onPrevious)
+            .off('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-next', onNext)
+            .off('mouseup.fxp.navscroll mouseout.fxp.navscroll touchend.fxp.navscroll touchcancel.fxp.navscroll', '> .nav-scrollable-menu', onEndScroll)
             .scroller('destroy');
         this.$element
             .removeClass('is-nav-tabs')
             .removeClass('is-nav-pills')
             .removeClass('nav-scrollable-has-previous')
             .removeClass('nav-scrollable-has-next');
-        $(window).off('resize.st.navscroll' + this.guid, scrolling);
+        $(window).off('resize.fxp.navscroll' + this.guid, scrolling);
 
         this.$menuPrevious.remove();
         this.$menuNext.remove();

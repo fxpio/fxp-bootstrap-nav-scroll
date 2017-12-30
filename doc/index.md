@@ -14,7 +14,7 @@ Installation
 ------------
 
 ```
-npm install @sonatra/bootstrap-nav-scroll --save
+npm install @fxp/bootstrap-nav-scroll --save
 ```
 
 Dev installation

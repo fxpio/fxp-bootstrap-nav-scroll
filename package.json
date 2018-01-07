@@ -23,12 +23,12 @@
   "engines": {},
   "main": "js/nav-scroll.js",
   "dependencies": {
-    "@fxp/jquery-scroller": "git://github.com/fxpio/fxp-jquery-scroller.git#master",
+    "@fxp/jquery-scroller": "github:fxpio/fxp-jquery-scroller#master",
     "bootstrap": "^3.3.7",
     "jquery": "^2.2.0||^3.2.0"
   },
   "devDependencies": {
-    "@fxp/bootstrap-dropdown-position": "git://github.com/fxpio/fxp-bootstrap-dropdown-position.git#master",
+    "@fxp/bootstrap-dropdown-position": "github:fxpio/fxp-bootstrap-dropdown-position#master",
     "grunt": "^1.0.1",
     "grunt-browser-sync": "^2.2.0",
     "grunt-cli": "^1.2.0",

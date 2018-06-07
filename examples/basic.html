@@ -4,10 +4,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
     <title>Basic example - Fxp Bootstrap Nav Scroll</title>
-    <link href="../node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-    <link href="../css/scroller.css" rel="stylesheet">
-    <link href="../css/dropdown-position.css" rel="stylesheet">
-    <link href="../css/nav-scroll.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
     <style>
         body > .container {
             margin-top: 70px;
@@ -224,24 +221,6 @@
         </div>
     </div>
 </div>
-<script>
-    var require = {
-        paths: {
-            'jquery': '../node_modules/jquery/dist/jquery',
-            'bootstrap/js/dropdown': '../node_modules/bootstrap/js/dropdown',
-            'fxp-jquery-scroller': '../node_modules/@fxp/jquery-scroller/js/scroller',
-            'fxp-dropdown-position': '../node_modules/@fxp/bootstrap-dropdown-position/js/dropdown-position',
-            'fxp-bootstrap-nav-scroll': '../js/nav-scroll'
-        },
-        shim: {
-            'bootstrap/js/dropdown': ['jquery']
-        },
-        deps: ['fxp-dropdown-position', 'fxp-bootstrap-nav-scroll'],
-        callback: function () {
-            $(window).trigger('load');
-        }
-    };
-</script>
-<script src="../node_modules/requirejs/require.js" async="async"></script>
+<script src="main.js" async="async"></script>
 </body>
 </html>

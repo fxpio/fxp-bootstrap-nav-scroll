@@ -7,190 +7,27 @@
  * file that was distributed with this source code.
  */
 
-/*global define*/
-/*global jQuery*/
-/*global navigator*/
-/*global window*/
-/*global document*/
-/*global CSSMatrix*/
-/*global WebKitCSSMatrix*/
-/*global MSCSSMatrix*/
+import pluginify from '@fxp/jquery-pluginify';
+import BasePlugin from '@fxp/jquery-pluginify/js/plugin';
+import $ from "jquery";
+import '@fxp/jquery-scroller';
+import {onEndScroll, onHideDropdown, onNext, onPrevious, onShownDropdown, scrolling} from "./utils/events";
+import {refreshIndicator} from "./utils/indicators";
 
 /**
- * @param {jQuery} $
+ * Nav Scroll class.
  */
-(function (factory) {
-    'use strict';
-
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery', '@fxp/jquery-scroller'], factory);
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-    'use strict';
-
+export default class NavScroll extends BasePlugin
+{
     /**
-     * Stop the scrolling on press.
+     * Constructor.
      *
-     * @param {jQuery.Event|Event|NavScroll} event The jquery event or nav scroll instance
-     *
-     * @private
+     * @param {HTMLElement} element The DOM element
+     * @param {object}      options The options
      */
-    function onEndScroll(event) {
-        var self = (undefined !== event.data) ? event.data : event;
+    constructor(element, options = {}) {
+        super(element, options);
 
-        if (self.$element.data('st-scroll-timeout')) {
-            window.clearInterval(self.$element.data('st-scroll-timeout'));
-            self.$element.removeData('st-scroll-timeout');
-        }
-    }
-
-    /**
-     * Action when the previous button is pressed.
-     *
-     * @param {NavScroll} self      The nav scroll instance
-     * @param {String}    className The css class of button action
-     * @param {Number}    delta     The delta of the scrolling
-     *
-     * @private
-     */
-    function scrollNav(self, className, delta) {
-        var timeout;
-
-        if (!self.$element.hasClass(className)) {
-            onEndScroll(self);
-
-            return;
-        }
-
-        self.$element.scroller('setScrollPosition', self.$element.scroller('getScrollPosition') + delta);
-
-        timeout = window.setInterval(function () {
-            self.$element.scroller('setScrollPosition', self.$element.scroller('getScrollPosition') + delta);
-        }, 16);
-
-        self.$element.data('st-scroll-timeout', timeout);
-    }
-
-    /**
-     * Action when the previous button is pressed.
-     *
-     * @param {jQuery.Event} event
-     *
-     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onPrevious(event) {
-        scrollNav(event.data, 'nav-scrollable-has-previous', -15);
-
-        return false;
-    }
-
-    /**
-     * Action when the next button is pressed.
-     *
-     * @param {jQuery.Event} event
-     *
-     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onNext(event) {
-        scrollNav(event.data, 'nav-scrollable-has-next', 15);
-
-        return false;
-    }
-
-    /**
-     * Refreshes the left and right indicator, depending of the presence of
-     * items.
-     *
-     * @param {NavScroll} self         The nav scroll instance
-     * @param {Boolean}   hideDropdown Hide the dropdown
-     *
-     * @private
-     */
-    function refreshIndicator(self, hideDropdown) {
-        var position = self.$element.scroller('getScrollPosition'),
-            max = self.$element.scroller('getMaxScrollPosition') - 1;
-
-        if (position > 0) {
-            self.$element.addClass('nav-scrollable-has-previous');
-
-        } else {
-            self.$element.removeClass('nav-scrollable-has-previous');
-        }
-
-        if (position < max) {
-            self.$element.addClass('nav-scrollable-has-next');
-
-        } else {
-            self.$element.removeClass('nav-scrollable-has-next');
-        }
-
-        if (hideDropdown && null !== self.$dropdownToggle) {
-            self.$dropdownToggle.dropdown('toggle');
-        }
-    }
-
-    /**
-     * Refresh the indicator on scrolling.
-     *
-     * @param {jQuery.Event|Event} event
-     *
-     * @typedef {NavScroll} Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function scrolling(event) {
-        refreshIndicator(event.data, 'resize' !== event.type);
-    }
-
-    /**
-     * Action when dropdown is shown (to close the dropdown when the navscroll is in scrolling).
-     *
-     * @param {jQuery.Event} event
-     *
-     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onShownDropdown(event) {
-        event.data.$dropdownToggle = $('.dropdown-toggle', event.target);
-    }
-
-    /**
-     * Action when dropdown is hidden (to close the dropdown when the navscroll is in scrolling).
-     *
-     * @param {jQuery.Event} event
-     *
-     * @typedef {NavScroll} jQuery.Event.data The nav scroll instance
-     *
-     * @private
-     */
-    function onHideDropdown(event) {
-        event.data.$dropdownToggle = null;
-    }
-
-    // NAV SCROLL CLASS DEFINITION
-    // ===========================
-
-    /**
-     * @constructor
-     *
-     * @param {string|elements|object|jQuery} element
-     * @param {object}                        options
-     *
-     * @this NavScroll
-     */
-    var NavScroll = function (element, options) {
-        this.guid     = jQuery.guid;
-        this.options  = $.extend(true, {}, NavScroll.DEFAULTS, options);
-        this.$element = $(element);
         this.$dropdownToggle = null;
         this.$menuPrevious = null;
         this.$menuNext = null;
@@ -201,7 +38,7 @@
             .on('shown.bs.dropdown.fxp.navscroll', null, this, onShownDropdown)
             .on('hide.bs.dropdown.fxp.navscroll', null, this, onHideDropdown);
 
-        var $nav = $('.' + this.options.classNav, this.$element);
+        let $nav = $('.' + this.options.classNav, this.$element);
 
         if ($nav.hasClass('nav-tabs')) {
             this.$element.addClass('is-nav-tabs');
@@ -238,30 +75,13 @@
         if (this.options.initscrollToActiveItem) {
             this.scrollToActiveItem();
         }
-    },
-        old;
-
-    /**
-     * Defaults options.
-     *
-     * @type {object}
-     */
-    NavScroll.DEFAULTS = {
-        classNav:               'nav',
-        scrollbar:              false,
-        scrollbarInverse:       false,
-        initscrollToActiveItem: true,
-        previousIcon:           '<span class="glyphicon glyphicon-chevron-left"></span>',
-        nextIcon:               '<span class="glyphicon glyphicon-chevron-right"></span>'
-    };
+    }
 
     /**
      * Scroll to the active item.
-     *
-     * @this NavScroll
      */
-    NavScroll.prototype.scrollToActiveItem = function () {
-        var $nav = $('.' + this.options.classNav, this.$element),
+    scrollToActiveItem() {
+        let $nav = $('.' + this.options.classNav, this.$element),
             $active = $('> li.active', $nav),
             navWidth,
             activePosition;
@@ -276,14 +96,12 @@
         if (activePosition >= navWidth) {
             this.$element.scroller('setScrollPosition', activePosition - navWidth);
         }
-    };
+    }
 
     /**
-     * Destroy instance.
-     *
-     * @this NavScroll
+     * Destroy the instance.
      */
-    NavScroll.prototype.destroy = function () {
+    destroy() {
         this.$element
             .off('scrolling.fxp.scroller.fxp.navscroll', scrolling)
             .off('shown.bs.dropdown.fxp.navscroll', onShownDropdown)
@@ -291,74 +109,31 @@
             .off('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-prev', onPrevious)
             .off('mousedown.fxp.navscroll touchstart.fxp.navscroll', '> .nav-scrollable-next', onNext)
             .off('mouseup.fxp.navscroll mouseout.fxp.navscroll touchend.fxp.navscroll touchcancel.fxp.navscroll', '> .nav-scrollable-menu', onEndScroll)
-            .scroller('destroy');
-        this.$element
             .removeClass('is-nav-tabs')
             .removeClass('is-nav-pills')
             .removeClass('nav-scrollable-has-previous')
-            .removeClass('nav-scrollable-has-next');
+            .removeClass('nav-scrollable-has-next')
+            .scroller('destroy');
+
         $(window).off('resize.fxp.navscroll' + this.guid, scrolling);
 
         this.$menuPrevious.remove();
         this.$menuNext.remove();
-        this.$element.removeData('st.navscroll');
 
-        delete this.$menuPrevious;
-        delete this.$menuNext;
-        delete this.$dropdownToggle;
-    };
-
-
-    // NAV SCROLL PLUGIN DEFINITION
-    // ============================
-
-    function Plugin(option) {
-        var args = Array.prototype.slice.call(arguments, 1);
-
-        return this.each(function () {
-            var $this   = $(this),
-                data    = $this.data('st.navscroll'),
-                options = typeof option === 'object' && option;
-
-            if (!data && option === 'destroy') {
-                return;
-            }
-
-            if (!data) {
-                data = new NavScroll(this, options);
-                $this.data('st.navscroll', data);
-            }
-
-            if (typeof option === 'string') {
-                data[option].apply(data, args);
-            }
-        });
+        super.destroy();
     }
+}
 
-    old = $.fn.navScroll;
+/**
+ * Defaults options.
+ */
+NavScroll.defaultOptions = {
+    classNav:               'nav',
+    scrollbar:              false,
+    scrollbarInverse:       false,
+    initscrollToActiveItem: true,
+    previousIcon:           '<span class="glyphicon glyphicon-chevron-left"></span>',
+    nextIcon:               '<span class="glyphicon glyphicon-chevron-right"></span>'
+};
 
-    $.fn.navScroll             = Plugin;
-    $.fn.navScroll.Constructor = NavScroll;
-
-
-    // NAV SCROLL NO CONFLICT
-    // ======================
-
-    $.fn.navScroll.noConflict = function () {
-        $.fn.navScroll = old;
-
-        return this;
-    };
-
-
-    // NAV SCROLL DATA-API
-    // ===================
-
-    $(window).on('load', function () {
-        $('[data-nav-scroll="true"]').each(function () {
-            var $this = $(this);
-            Plugin.call($this, $this.data());
-        });
-    });
-
-}));
+pluginify('navScroll', 'fxp.navscroll', NavScroll, true, '[data-nav-scroll="true"]');

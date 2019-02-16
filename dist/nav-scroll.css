@@ -1,0 +1,137 @@
+.nav-scrollable,
+div[data-nav-scroll="true"] {
+  overflow: hidden;
+}
+.nav-scrollable .nav,
+div[data-nav-scroll="true"] .nav {
+  display: table;
+  float: none;
+  margin: 0;
+}
+.nav-scrollable .nav > li,
+div[data-nav-scroll="true"] .nav > li {
+  display: table-cell;
+  float: none;
+  margin: 0;
+  vertical-align: middle;
+}
+.nav-scrollable .nav > li > a,
+div[data-nav-scroll="true"] .nav > li > a {
+  white-space: nowrap;
+}
+.nav-scrollable .nav.navbar-nav > li > a,
+div[data-nav-scroll="true"] .nav.navbar-nav > li > a {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.nav-scrollable > .nav,
+div[data-nav-scroll="true"] > .nav {
+  overflow: hidden;
+}
+.nav-scrollable {
+  padding: 0 26px;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transform: translate3d(0, 0, 0);
+}
+.nav-scrollable .nav-scrollable-menu {
+  position: absolute;
+  display: inline-block;
+  z-index: 0;
+  top: 0;
+  cursor: default;
+  padding: 10px 15px;
+  height: 100%;
+  padding-left: 6px;
+  padding-right: 6px;
+  opacity: 0;
+  -webkit-transition: opacity .5s ease, background .3s ease, z-index 0.5s ease;
+  -o-transition: opacity .5s ease, background .3s ease, z-index 0.5s ease;
+  transition: opacity .5s ease, background .3s ease, z-index 0.5s ease;
+}
+.nav-scrollable .nav-scrollable-menu.nav-scrollable-prev {
+  left: 0;
+}
+.nav-scrollable .nav-scrollable-menu.nav-scrollable-next {
+  right: 0;
+}
+.nav-scrollable .nav-scrollable-menu > span {
+  vertical-align: baseline;
+}
+.nav-scrollable .hammer-scrollbar {
+  margin: 0;
+}
+.nav-scrollable .hammer-scrollbar + .hammer-scroll-content .nav:not(.navbar-nav) {
+  margin-bottom: 5px;
+}
+.nav-scrollable .hammer-scrollbar.hammer-scroll-inverse + .hammer-scroll-content .nav:not(.navbar-nav) {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+.nav-scrollable.is-nav-tabs + .panel,
+.nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel,
+.nav-scrollable.is-nav-tabs + .panel > .panel-heading,
+.nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel > .panel-heading,
+.nav-scrollable.is-nav-tabs + .panel > .panel-body,
+.nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel > .panel-body,
+.nav-scrollable.is-nav-tabs + .panel > .panel-footer,
+.nav-scrollable.is-nav-tabs + .tab-content > .tab-pane > .panel > .panel-footer {
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+}
+.nav-scrollable.is-nav-pills {
+  margin-bottom: 10px;
+}
+.nav-scrollable.is-nav-pills .nav-scrollable-menu {
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.nav-scrollable.nav-scrollable-has-previous .nav-scrollable-prev,
+.nav-scrollable.nav-scrollable-has-next .nav-scrollable-next {
+  z-index: 1;
+  opacity: 1;
+  cursor: pointer;
+}
+.nav-scrollable:not(.nav-scrollable-has-previous):not(.nav-scrollable-has-next) .nav-scrollable-menu {
+  opacity: 0;
+  z-index: 0;
+}
+.navbar .nav-scrollable .nav-scrollable-menu {
+  line-height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+@media (max-width: 767px) {
+  .navbar.has-nav-scrollable .navbar-header {
+    float: left;
+  }
+  .nav-scrollable .navbar-nav > li > a {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+}
+.nav-scrollable.nav-scrollable-has-previous .nav-scrollable-prev:hover,
+.nav-scrollable.nav-scrollable-has-next .nav-scrollable-next:hover {
+  background-color: #eeeeee;
+}
+.navbar-inverse .nav-scrollable .nav-scrollable-menu {
+  color: #9d9d9d;
+}
+.navbar-inverse .nav-scrollable.nav-scrollable-has-previous .nav-scrollable-prev:hover,
+.navbar-inverse .nav-scrollable.nav-scrollable-has-next .nav-scrollable-next:hover,
+.navbar-inverse .nav-scrollable.nav-scrollable-has-previous .nav-scrollable-prev:focus,
+.navbar-inverse .nav-scrollable.nav-scrollable-has-next .nav-scrollable-next:focus {
+  color: #fff;
+  background-color: transparent;
+}
+.navbar-inverse .nav-scrollable.nav-scrollable-has-previous .nav-scrollable-prev:active,
+.navbar-inverse .nav-scrollable.nav-scrollable-has-next .nav-scrollable-next:active {
+  color: #fff;
+  background-color: #080808;
+}
